@@ -5,9 +5,7 @@
     <title>Assignment SOF3011</title>
 </head>
 <body>
-<h1><%= "Assignment" %>
-</h1>
-<br/>
-<a href="hello-servlet">Assignment</a>
+<h1>Assignment</h1>
+<p>Anh em Assignment</p>
 </body>
 </html>
