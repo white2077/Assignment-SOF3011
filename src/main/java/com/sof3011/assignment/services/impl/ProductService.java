@@ -10,24 +10,24 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ProductService implements IService<Product,Long> {
-    private final IProductRepository iProductRepository;
+    private final IProductRepository repository;
     @Override
     public List<Product> getAll() {
-        return iProductRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Product insert(Product e) {
-        return iProductRepository.save(e);
+        return repository.save(e);
     }
 
     @Override
     public void update(Product e) {
-        iProductRepository.save(e);
+        repository.save(e);
     }
 
     @Override
     public void delete(Long id) {
-        iProductRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

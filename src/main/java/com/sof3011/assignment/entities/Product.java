@@ -2,22 +2,38 @@ package com.sof3011.assignment.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity(name = "users")
+import java.util.List;
+import java.util.Set;
+
+@Entity(name = "products")
 @AllArgsConstructor
-@Builder
 @NoArgsConstructor
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "product_name")
+@Builder
+public class Product extends EntityCore {
+    @Size(min = 6)
+    @NotNull
+    @Column(name = "product_name",columnDefinition = "nvarchar(255)" ,nullable = false)
     private String productName;
+    @Column(name = "status", nullable = false)
+    private boolean status;
+    @Column(name = "slug",columnDefinition = "nvarchar(255)" ,nullable = false)
+    private String slug;
+    @OneToMany(mappedBy = "product")
+    private List<ProductVariant> productVariants;
+    @Column(name = "description",columnDefinition = "nvarchar(MAX)")
+    private String description;
 
+    @ManyToMany
+    private Set<ProductAttribute> productAttributes;
 }

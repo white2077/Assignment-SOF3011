@@ -1,4 +1,4 @@
-package com.sof3011.assignment.config;
+package com.sof3011.assignment.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

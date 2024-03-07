@@ -1,4 +1,4 @@
-package com.sof3011.assignment.controller;
+package com.sof3011.assignment.controllers.web;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

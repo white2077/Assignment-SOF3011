@@ -1,3 +1,4 @@
+<title>Electro - Ecommerce</title>
 <div class="section">
     <!-- container -->
     <div class="container">
