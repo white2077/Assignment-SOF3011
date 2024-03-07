@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Admin extends EntityCore{
+public class Admin extends CoreEntity {
     @NotNull
     @Size(min = 5)
     @Column(name = "username")

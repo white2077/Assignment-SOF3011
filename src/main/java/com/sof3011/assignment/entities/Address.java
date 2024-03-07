@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Address extends EntityCore{
+public class Address extends CoreEntity {
     @ManyToOne
     private Customer customer;
     @Column(name = "address")

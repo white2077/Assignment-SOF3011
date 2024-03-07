@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,12 +17,12 @@ import java.sql.Timestamp;
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntityCore {
+public class CoreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Column(name = "created_date",  nullable = false)
+    @Column(name = "created_date")
     private Timestamp createdDate;
     @Column(name = "modified_date")
     private Timestamp modifiedDate;

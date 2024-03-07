@@ -2,14 +2,16 @@ package com.sof3011.assignment.services.impl;
 
 import com.sof3011.assignment.entities.Product;
 import com.sof3011.assignment.repositories.IProductRepository;
+import com.sof3011.assignment.services.IProductService;
 import com.sof3011.assignment.services.IService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 @RequiredArgsConstructor
-public class ProductService implements IService<Product,Long> {
+public class ProductService implements IProductService {
     private final IProductRepository repository;
     @Override
     public List<Product> getAll() {
@@ -29,5 +31,15 @@ public class ProductService implements IService<Product,Long> {
     @Override
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Product> getAllProductFromPage(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public int getAllProductPage(Pageable pageable) {
+        return 0;
     }
 }

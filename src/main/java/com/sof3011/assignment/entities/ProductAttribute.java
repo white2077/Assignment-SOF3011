@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class ProductAttribute extends EntityCore{
+public class ProductAttribute extends CoreEntity {
     @Size(min = 5)
     @NotNull
     private String attributeName;

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderItem extends EntityCore{
+public class OrderItem extends CoreEntity {
     @NotNull
     @ManyToOne
     private OrderDetail orderDetail;

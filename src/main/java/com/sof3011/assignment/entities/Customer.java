@@ -2,7 +2,6 @@ package com.sof3011.assignment.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
@@ -18,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Customer extends EntityCore {
+public class Customer extends CoreEntity {
     @NotNull
     @Size(min = 5)
     @Column(name = "username")

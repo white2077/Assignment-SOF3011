@@ -20,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class OrderDetail extends EntityCore{
+public class OrderDetail extends CoreEntity {
     @ManyToOne
     private Customer customer;
     @Column(name = "address",columnDefinition = "nvarchar(1000)")
