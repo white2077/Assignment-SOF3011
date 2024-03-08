@@ -1,4 +1,4 @@
-<title>Admin-Home</title>
+<title>Admin - Dash Board</title>
 <body>
 <div class="main-panel">
     <div class="content-wrapper">

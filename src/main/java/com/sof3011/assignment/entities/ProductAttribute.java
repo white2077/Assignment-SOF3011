@@ -1,5 +1,8 @@
 package com.sof3011.assignment.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -10,7 +13,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.Set;
 
@@ -18,6 +24,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+@Getter
+@Setter
 public class ProductAttribute extends CoreEntity {
     @Size(min = 5)
     @NotNull
@@ -25,12 +33,15 @@ public class ProductAttribute extends CoreEntity {
 
     @ManyToOne
     private ProductAttribute attributeParent;
+
     @OneToMany(mappedBy = "attributeParent")
-    private List<ProductAttribute> productAttributes;
+    private Set<ProductAttribute> childAttributes;
+
     @NotNull
     @Size(min = 3)
     @Column(name = "slug",columnDefinition = "nvarchar(255)")
     private String slug;
     @ManyToMany(mappedBy = "productAttributes")
     Set<Product> products;
+
 }

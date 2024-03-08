@@ -1,4 +1,5 @@
-<title>All Product</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<title>Admin - All Products</title>
 <body>
 <div class="main-panel">
     <div class="content-wrapper">
@@ -13,29 +14,41 @@
                     <tr>
                         <th> Thumbnail </th>
                         <th> ProductName </th>
-                        <th> Quantity </th>
-                        <th> Price </th>
                         <th> Creation date</th>
                         <th> Modified date</th>
+                        <th> Status </th>
                         <th> Add Variant </th>
                         <th> Edit </th>
                         <th> Delete </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="py-1">
-                            <img src="${pageContext.request.contextPath}/assets/admin/images/avt.jpg" alt="image" />
-                        </td>
-                        <td> Cute girl </td>
-                        <td> 69 </td>
-                        <td> $ 77.99 </td>
-                        <td> May 15, 2015 </td>
-                        <td> May 15, 2015 </td>
-                        <td><a  class="btn-sm btn-success btn-fw"><i class="mdi mdi-window-restore"></i>Add variant</a></td>
-                        <td><a  class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color"></i>Edit</a></td>
-                        <td><a  class="btn-sm btn-danger btn-fw"><i class="mdi mdi-bitbucket"></i>Delete</a> </td>
-                    </tr>
+                   <c:forEach items="${products}" var="x">
+                       <tr>
+                           <td class="py-1">
+                               <img src="${pageContext.request.contextPath}/assets/admin/images/avt.jpg" alt="image" />
+                           </td>
+                           <td> ${x.productName} </td>
+                           <td> ${x.createdDate} </td>
+                           <c:choose>
+                               <c:when test="${x.modifiedDate == null}"><td>No modifier</td></c:when>
+                               <c:otherwise>
+                                   <td> ${x.modifiedDate} </td>
+                               </c:otherwise>
+                           </c:choose>
+                           <c:choose>
+                               <c:when test="${x.status}">
+                                   <td><label class="badge badge-success">Available</label></td>
+                               </c:when>
+                               <c:otherwise>
+                                   <td><label class="badge badge-danger">Unavailable</label></td>
+                               </c:otherwise>
+                           </c:choose>
+                           <td><a  class="btn-sm btn-success btn-fw"><i class="mdi mdi-window-restore"></i>Add variant</a></td>
+                           <td><a  class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color"></i>Edit</a></td>
+                           <td><a  class="btn-sm btn-danger btn-fw"><i class="mdi mdi-bitbucket"></i>Delete</a> </td>
+                       </tr>
+                   </c:forEach>
                     </tbody>
                 </table>
             </div>

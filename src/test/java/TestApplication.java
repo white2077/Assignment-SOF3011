@@ -1,5 +1,7 @@
 import com.sof3011.assignment.entities.Product;
+import com.sof3011.assignment.repositories.IProductAttributeRepository;
 import com.sof3011.assignment.repositories.IProductRepository;
+import com.sof3011.assignment.repositories.IProductVariantRepository;
 import com.sof3011.assignment.utils.ContextUtil;
 import com.sof3011.assignment.utils.SlugUtil;
 import org.junit.jupiter.api.BeforeAll;
@@ -15,7 +17,7 @@ public class TestApplication {
     @BeforeAll
     public static void setUpJPA() {
         IProductRepository repository = ContextUtil.getBean(IProductRepository.class);
-        Product product = Product.builder().productName("Chuột logitech G102").slug(SlugUtil.convertNameToSlug("Chuột logitech G102")).status(true).build();
+        Product product = Product.builder().productName("Chuột logitech G102").slug(SlugUtil.convertNameToSlug("Chuột logitech G102")).status(true).thumbnail("21321").build();
         repository.save(product);
     }
     @BeforeAll
@@ -33,7 +35,14 @@ public class TestApplication {
     @Test
     void assertTestAccessProduct(){
         IProductRepository repository = ContextUtil.getBean(IProductRepository.class);
-        repository.findAll().forEach(product -> System.out.println(product.getSlug()));
+        repository.findAll().forEach(product -> System.out.println(product.getCreatedDate()));
         assertNotNull(repository.findAll());
+    }
+    @Test
+    void testCategory(){
+        IProductAttributeRepository repository = ContextUtil.getBean(IProductAttributeRepository.class);
+        repository.findById(1L).get()
+                .getChildAttributes()
+                .forEach(productAttribute -> System.out.println(productAttribute.getChildAttributes()));
     }
 }

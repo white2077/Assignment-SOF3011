@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,9 @@ public class Product extends CoreEntity {
     private List<ProductVariant> productVariants;
     @Column(name = "description",columnDefinition = "nvarchar(MAX)")
     private String description;
+    @NotBlank
+    @Column(name = "thumbnail")
+    private String thumbnail;
 
     @ManyToMany
     private Set<ProductAttribute> productAttributes;

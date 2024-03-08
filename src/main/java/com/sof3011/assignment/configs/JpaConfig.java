@@ -43,7 +43,7 @@ public class JpaConfig  {
 
     Properties additionalProperties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+//        properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.SQLServer2016Dialect");
         properties.setProperty("hibernate.enable_lazy_load_no_trans","true");
         properties.setProperty("hibernate.show_sql", "true");
