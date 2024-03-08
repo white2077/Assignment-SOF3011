@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,9 @@ public class ProductAttribute extends CoreEntity {
     private ProductAttribute attributeParent;
     @OneToMany(mappedBy = "attributeParent")
     private List<ProductAttribute> productAttributes;
-    @Column(name = "slug",columnDefinition = "nvarchar(255)" ,nullable = false)
+    @NotNull
+    @Size(min = 3)
+    @Column(name = "slug",columnDefinition = "nvarchar(255)")
     private String slug;
     @ManyToMany(mappedBy = "productAttributes")
     Set<Product> products;

@@ -15,7 +15,6 @@ public class TestUnits {
     public void testBootSpringData() {
         IProductRepository repository = ContextUtil.getBean(IProductRepository.class);
         Product product = Product.builder().productName("Chuột logitech G102").slug(SlugUtil.convertNameToSlug("Chuột logitech G102")).status(true).build();
-        product.setCreatedDate(Timestamp.valueOf(LocalDateTime.now()));
         repository.save(product);
     }
 

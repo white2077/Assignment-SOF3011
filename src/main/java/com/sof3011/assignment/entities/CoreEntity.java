@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @MappedSuperclass
@@ -26,5 +29,9 @@ public class CoreEntity {
     private Timestamp createdDate;
     @Column(name = "modified_date")
     private Timestamp modifiedDate;
+    @PrePersist
+    public void setCurrentDate(){
+        createdDate = Timestamp.valueOf(LocalDateTime.now());
+    }
 
 }

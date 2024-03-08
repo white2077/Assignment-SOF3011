@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <title>Electro - Ecommerce</title>
 <div class="section">
     <!-- container -->
@@ -115,7 +116,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="/assets/web/img/product02.png" alt="">
+                                        <img src="<c:url value="/assets/web/img/img-test3.jpg"/>" alt="">
                                         <div class="product-label">
                                             <span class="new">NEW</span>
                                         </div>
@@ -146,7 +147,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="/assets/web/img/product03.png" alt="">
+                                        <img src="<c:url value="/assets/web/img/img-test3.jpg"/>" alt="">
                                         <div class="product-label">
                                             <span class="sale">-30%</span>
                                         </div>
@@ -172,7 +173,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="/assets/web/img/product04.png" alt="">
+                                        <img src="<c:url value="/assets/web/img/img-test2.jpg"/>" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
@@ -200,7 +201,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="/assets/web/img/product05.png" alt="">
+                                        <img src="<c:url value="/assets/web/img/img-test.jpg"/>" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>

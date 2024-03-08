@@ -30,10 +30,11 @@ public class OrderDetail extends CoreEntity {
     private String phoneNumber;
     @Column(name = "customer_name",columnDefinition = "nvarchar(500)")
     @NotNull
-    @Size(max = 10)
+    @Size(min = 5)
     private String customerName;
     @Column(name = "total")
     private Long total;
+    @NotNull
     @Column(name = "status")
     @NotBlank
     @Enumerated(EnumType.STRING)
