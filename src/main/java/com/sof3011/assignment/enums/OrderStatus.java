@@ -1,5 +1,5 @@
 package com.sof3011.assignment.enums;
 
 public enum OrderStatus {
-    PENDING,SHIPPING,COMPLETE
+    PENDING,SHIPPING,CANCEL,FAIL,COMPLETE
 }
