@@ -116,7 +116,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="<c:url value="/assets/web/img/img-test3.jpg"/>" alt="">
+                                        <img src="/assets/web/img/F0gFa4zaEAIxd1t.jpg" alt="">
                                         <div class="product-label">
                                             <span class="new">NEW</span>
                                         </div>
@@ -147,7 +147,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="<c:url value="/assets/web/img/img-test3.jpg"/>" alt="">
+                                        <img src="/assets/web/img/product01.png" alt="">
                                         <div class="product-label">
                                             <span class="sale">-30%</span>
                                         </div>
@@ -173,7 +173,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="<c:url value="/assets/web/img/img-test2.jpg"/>" alt="">
+                                        <img src="/assets/web/img/product03.png" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>
@@ -201,7 +201,7 @@
                                 <!-- product -->
                                 <div class="product">
                                     <div class="product-img">
-                                        <img src="<c:url value="/assets/web/img/img-test.jpg"/>" alt="">
+                                        <img src="/assets/web/img/product03.png" alt="">
                                     </div>
                                     <div class="product-body">
                                         <p class="product-category">Category</p>

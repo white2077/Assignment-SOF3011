@@ -32,5 +32,4 @@ public class CoreEntity {
     public void setCurrentDate(){
         createdDate = Timestamp.valueOf(LocalDateTime.now());
     }
-
 }
