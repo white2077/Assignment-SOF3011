@@ -17,8 +17,6 @@ public class TestApplication {
     @BeforeAll
     public static void setUpJPA() {
         IProductRepository repository = ContextUtil.getBean(IProductRepository.class);
-        Product product = Product.builder().productName("Chuột logitech G102").slug(SlugUtil.convertNameToSlug("Chuột logitech G102")).status(true).thumbnail("21321").build();
-        repository.save(product);
     }
     @BeforeAll
     static void testSetup(){

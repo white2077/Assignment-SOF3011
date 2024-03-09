@@ -24,7 +24,7 @@ public class ProductVariantService implements IProductVariantService {
 
     @Override
     public void update(ProductVariant e) {
-//        e.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+        e.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
         iProductVariantRepository.save(e);
     }
 
