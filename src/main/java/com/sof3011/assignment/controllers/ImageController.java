@@ -18,7 +18,7 @@ import java.nio.file.Path;
 public class ImageController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String imagePath = "D:\\FPTPOLYTECHNIC\\Semester5\\java4\\assignment\\Assignment-SOF3011\\src\\uploads\\product-image\\";
+        String imagePath = "/media/white2044/Data/FPTPOLYTECHNIC/Semester5/Advenced-Testing/Assignment/src/uploads/product-image";
         String imageName = req.getParameter("image");
         Path image = Path.of("upload",imageName);
         File imageFile = new File(imagePath+imageName);

@@ -17,14 +17,10 @@
                     <div class="card-body">
                         <h4 class="card-title">Add product</h4>
                         <p class="card-description"> Add new product </p>
-                        <form class="forms-sample">
+                        <form class="forms-sample" action="${pageContext.request.contextPath}/admin/products/add-new" method="post">
                             <div class="form-group">
                                 <label for="productName">Product name</label>
-                                <input type="text" class="form-control" id="productName" placeholder="Product Name">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail3">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+                                <input type="text" class="form-control" id="productName" name="productName" placeholder="Product Name">
                             </div>
                             <div class="form-group">
                                 <label for="exampleSelectGender">Product Attribute</label>

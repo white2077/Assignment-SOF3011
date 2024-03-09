@@ -23,22 +23,25 @@ import java.util.Set;
 @Getter
 @Setter
 public class Product extends CoreEntity {
-    @Size(min = 6)
-    @NotNull
+    @Size(min = 6,message = "Product name must more than 6 character")
+    @NotNull(message = "Product name is not null")
     @Column(name = "product_name",columnDefinition = "nvarchar(255)" ,nullable = false)
     private String productName;
-    @Column(name = "status", nullable = false)
+    @NotNull
+    @Column(name = "status")
     private boolean status;
+    @NotNull(message = "Slug is not null")
+    @Size(min = 3,message = "Product name must more than 3 character")
     @Column(name = "slug",columnDefinition = "nvarchar(255)" ,nullable = false)
     private String slug;
+    @NotBlank(message = "Thumbnail is not null or blank")
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
     @OneToMany(mappedBy = "product")
     private List<ProductVariant> productVariants;
     @Column(name = "description",columnDefinition = "Text")
     private String description;
-    @NotBlank
-    @Column(name = "thumbnail")
-    private String thumbnail;
-
     @ManyToMany
     private Set<ProductAttribute> productAttributes;
 }
