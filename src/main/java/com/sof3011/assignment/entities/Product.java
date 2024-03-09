@@ -33,7 +33,7 @@ public class Product extends CoreEntity {
     private String slug;
     @OneToMany(mappedBy = "product")
     private List<ProductVariant> productVariants;
-    @Column(name = "description",columnDefinition = "nvarchar(MAX)")
+    @Column(name = "description",columnDefinition = "LONGTEXT")
     private String description;
     @NotBlank
     @Column(name = "thumbnail")
