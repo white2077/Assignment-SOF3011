@@ -20,8 +20,13 @@ public class ProductAttributeService implements IProductAttributeService {
     }
 
     @Override
-    public void update(ProductAttribute e) {
+    public void update(Long id, ProductAttribute e) {
 
+    }
+
+    @Override
+    public ProductAttribute getById(Long aLong) {
+        return null;
     }
 
     @Override

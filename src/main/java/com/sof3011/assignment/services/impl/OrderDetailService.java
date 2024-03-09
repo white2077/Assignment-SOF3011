@@ -25,7 +25,12 @@ public class OrderDetailService implements IOrderDetaiService {
     }
 
     @Override
-    public void update(OrderDetail e) {
+    public OrderDetail getById(Long aLong) {
+        return null;
+    }
+
+    @Override
+    public void update(Long id, OrderDetail e) {
 
     }
 

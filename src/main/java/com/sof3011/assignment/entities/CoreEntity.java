@@ -1,16 +1,13 @@
 package com.sof3011.assignment.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -27,6 +24,7 @@ public class CoreEntity {
     @Column(name = "created_date")
     private Timestamp createdDate;
     @Column(name = "modified_date")
+    @UpdateTimestamp
     private Timestamp modifiedDate;
     @PrePersist
     public void setCurrentDate(){

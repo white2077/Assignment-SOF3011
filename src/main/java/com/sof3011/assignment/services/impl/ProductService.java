@@ -1,9 +1,9 @@
 package com.sof3011.assignment.services.impl;
 
 import com.sof3011.assignment.entities.Product;
+import com.sof3011.assignment.exception.EntityNotFoundGeneralException;
 import com.sof3011.assignment.repositories.IProductRepository;
 import com.sof3011.assignment.services.IProductService;
-import com.sof3011.assignment.services.IService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,9 +26,19 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void update(Product e) {
-        e.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
-        repository.save(e);
+    public Product getById(Long aLong) {
+        return null;
+    }
+
+    @Override
+    public void update(Long id, Product e) {
+        if (repository.existsById(id)) {
+            e.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+            e.setId(id);
+            repository.save(e);
+        } else {
+            throw new EntityNotFoundGeneralException("entity " + e.getClass() + " not found");
+        }
     }
 
     @Override
