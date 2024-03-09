@@ -18,9 +18,9 @@
 
 </head>
 <body>
-<jsp:include page="../layouts/web/header.jsp"/>
+<jsp:include page="../../WEB-CONTENT/layouts/web/header.jsp"/>
 <sitemesh:write property="body"/>
-<jsp:include page="../layouts/web/footer.jsp"/>
+<jsp:include page="../../WEB-CONTENT/layouts/web/footer.jsp"/>
 </body>
 <script src="${pageContext.request.contextPath}/assets/web/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/web/js/bootstrap.min.js"></script>

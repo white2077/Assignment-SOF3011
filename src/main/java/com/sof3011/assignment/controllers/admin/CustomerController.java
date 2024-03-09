@@ -15,6 +15,6 @@ public class CustomerController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
         if (url.equals("/admin/customers"))
-            req.getRequestDispatcher("/WEB-INF/pages/admin/customer.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/customer.jsp").forward(req,resp);
     }
 }

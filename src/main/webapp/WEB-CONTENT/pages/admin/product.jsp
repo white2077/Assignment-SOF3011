@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">All Product</h4>
-            <button type="button" class="btn btn-success btn-fw"> + Add Product</button>
+            <a type="button" href="${pageContext.request.contextPath}/admin/products/add-product" class="btn btn-success btn-fw"> + Add Product</a>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>

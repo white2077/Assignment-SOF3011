@@ -20,12 +20,16 @@ public class ProductController extends HttpServlet {
         String url = req.getRequestURI();
         if (url.equals("/admin/products")) {
             req.setAttribute("products",productService.getAll());
-            req.getRequestDispatcher("/WEB-INF/pages/admin/product.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product.jsp").forward(req, resp);
+        }
+        if (url.equals("/admin/products/add-product")) {
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req,resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
+        //send params = > name input = 'name' => request.getParams()
     }
 }

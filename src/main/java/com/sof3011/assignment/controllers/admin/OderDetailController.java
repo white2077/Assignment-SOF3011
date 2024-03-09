@@ -13,6 +13,6 @@ public class OderDetailController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
         if (url.equals("/admin/order-details"))
-            req.getRequestDispatcher("/WEB-INF/pages/admin/order-details.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/order-details.jsp").forward(req,resp);
     }
 }

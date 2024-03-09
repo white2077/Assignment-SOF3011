@@ -13,6 +13,6 @@ public class AdminDashboardController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
         if (url.equals("/admin/dash-board"))
-            req.getRequestDispatcher("/WEB-INF/pages/admin/home.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/home.jsp").forward(req,resp);
     }
 }

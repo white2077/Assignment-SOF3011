@@ -31,7 +31,7 @@
 </head>
 <body>
 <div class="container-scroller">
-    <jsp:include page="../layouts/admin/header-side-bar.jsp"/>
+    <jsp:include page="../../WEB-CONTENT/layouts/admin/header-side-bar.jsp"/>
     <sitemesh:write property="body"/>
 
 </div>
