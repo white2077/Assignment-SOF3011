@@ -11,6 +11,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminService implements IAdminService {
     @Override
+    public Admin getById(Long aLong) {
+        return null;
+    }
+
+    @Override
     public List<Admin> getAll() {
         return null;
     }
@@ -21,7 +26,7 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public void update(Admin e) {
+    public void update(Long id, Admin e) {
 
     }
 

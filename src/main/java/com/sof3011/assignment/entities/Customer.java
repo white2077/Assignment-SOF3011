@@ -1,21 +1,19 @@
 package com.sof3011.assignment.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "customers")
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+@Setter
+@Getter
 public class Customer extends CoreEntity {
     @NotNull
     @Size(min = 5)
@@ -46,5 +44,10 @@ public class Customer extends CoreEntity {
     @JoinTable(name = "cart")
     private List<ProductVariant> cartItems;
     @OneToMany(mappedBy = "customer")
-    private List<Address> addresses;
+    private List<Address> addresses = new ArrayList<>();
+
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+        address.setCustomer(this);
+    }
 }
