@@ -31,7 +31,7 @@ public class Product extends CoreEntity {
     @Column(name = "status")
     private boolean status;
     @NotNull(message = "Slug is not null")
-    @Size(min = 3,message = "Product name must more than 3 character")
+    @Size(min = 6,message = "slug must more than 6 character")
     @Column(name = "slug",columnDefinition = "nvarchar(255)" ,nullable = false)
     private String slug;
     @NotBlank(message = "Thumbnail is not null or blank")
@@ -40,6 +40,7 @@ public class Product extends CoreEntity {
 
     @OneToMany(mappedBy = "product")
     private List<ProductVariant> productVariants;
+    @NotBlank(message = "Descriptions is not blank")
     @Column(name = "description",columnDefinition = "Text")
     private String description;
     @ManyToMany

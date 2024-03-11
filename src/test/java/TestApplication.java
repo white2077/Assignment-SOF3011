@@ -25,8 +25,6 @@ public class TestApplication {
         System.out.println(123);
     }
     @Test
-    @EnabledForJreRange(min = JAVA_9, max = JAVA_11)
-    @DisplayName("💥💥💥💥💥")
     void assertConvertToSlug() {
         String input = "Chuột logitech G102";
         assertEquals("chuot-logitech-g102", SlugUtil.convertNameToSlug(input));

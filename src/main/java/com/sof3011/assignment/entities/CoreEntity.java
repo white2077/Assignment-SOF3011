@@ -23,7 +23,6 @@ public class CoreEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
     @Column(name = "created_date")
     private Timestamp createdDate;
     @Column(name = "modified_date")

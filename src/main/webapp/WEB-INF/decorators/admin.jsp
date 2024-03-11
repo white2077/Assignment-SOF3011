@@ -54,5 +54,6 @@
 <!-- endinject -->
 <!-- Custom js for this page -->
 <script src="${pageContext.request.contextPath}/assets/admin/js/dashboard.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js" integrity="sha512-KZmyTq3PLx9EZl0RHShHQuXtrvdJ+m35tuOiwlcZfs/rE7NZv29ygNA8SFCkMXTnYZQK2OX0Gm2qKGfvWEtRXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>

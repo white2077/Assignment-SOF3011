@@ -3,7 +3,7 @@
 <body>
 <div class="main-panel">
     <div class="content-wrapper">
-<div class="col-lg-12 grid-margin stretch-card">
+<div class="col-lg-12 grid-margin stretch-card" ng-app="app">
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">All Product</h4>
@@ -12,7 +12,7 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th> Thumbnail </th>
+                        <th> Thumbnail  </th>
                         <th> ProductName </th>
                         <th> Creation date</th>
                         <th> Modified date</th>
@@ -22,7 +22,7 @@
                         <th> Delete </th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody ng-controller="deleteCtrl">
                    <c:forEach items="${products}" var="x">
                        <tr>
                            <td class="py-1">
@@ -46,7 +46,11 @@
                            </c:choose>
                            <td><a  class="btn-sm btn-success btn-fw"><i class="mdi mdi-window-restore"></i>Add variant</a></td>
                            <td><a  class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color"></i>Edit</a></td>
-                           <td><a  class="btn-sm btn-danger btn-fw"><i class="mdi mdi-bitbucket"></i>Delete</a> </td>
+                           <td>
+                               <form method="post" action="${pageContext.request.contextPath}/admin/products/delete?productId=${x.id}">
+                                   <button type="submit"  class="btn-sm btn-danger btn-fw"><i class="mdi mdi-bitbucket"></i>Delete</button>
+                               </form>
+                           </td>
                        </tr>
                    </c:forEach>
                     </tbody>
