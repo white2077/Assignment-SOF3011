@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -37,13 +38,13 @@ public class Product extends CoreEntity {
     @NotBlank(message = "Descriptions is not blank")
     @Column(name = "description",columnDefinition = "Text")
     private String description;
-    @NotBlank(message = "Thumbnail is not null or blank")
+
+    @Size(min = 37,message = "please choose thumbnail")
     @Column(name = "thumbnail")
     private String thumbnail;
 
     @OneToMany(mappedBy = "product")
     private List<ProductVariant> productVariants;
-
     @ManyToMany
     private Set<ProductAttribute> productAttribute;
 }

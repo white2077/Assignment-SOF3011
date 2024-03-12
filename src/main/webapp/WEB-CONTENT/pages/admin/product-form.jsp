@@ -7,7 +7,7 @@
             <h3 class="page-title"> Add product </h3>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/products">Products</a></li>
+                        <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/admin/products">Products</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Add Product</li>
                 </ol>
             </nav>
@@ -18,7 +18,8 @@
                     <div class="card-body">
                         <h4 class="card-title">Add product</h4>
                         <p class="card-description"> Add new product </p>
-                        <form class="forms-sample" action="${pageContext.request.contextPath}/admin/products/add-new" method="post">
+                        <form class="forms-sample" action="${pageContext.request.contextPath}/admin/products/add-new"
+                              enctype="multipart/form-data" method="post" accept="image/png, image/gif, image/jpeg">
                             <div class="form-group">
                                 <label for="productName">Product name</label>
                                 <input type="text" class="form-control" id="productName" name="productName" placeholder="Product Name">
@@ -28,6 +29,7 @@
                                 <div class="form-group">
                                     <label for="exampleSelectGender">${x.attributeName}</label>
                                     <select class="form-control" name="${x.slug}" id="exampleSelectGender">
+                                        <option value="">--Please select</option>
                                         <c:forEach items="${x.childAttributes}" var="child">
                                             <option value="${child.id}">${child.attributeName}</option>
                                         </c:forEach>
@@ -35,11 +37,22 @@
                                 </div>
                             </c:forEach>
                             <div class="form-group">
+                                <label for="exampleSelectGender">${categories.attributeName}</label>
+                                <c:forEach items="${categories.childAttributes}" var="x">
+                                    <div class="form-check form-check-flat form-check-primary mr-3">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input">${x.attributeName}<i class="input-helper"></i></label>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <div class="form-group">
                                 <label>Thumbnail upload</label>
                                 <input type="file" class="file-upload-default">
                                 <div class="input-group col-xs-12">
-                                    <input type="file" class="form-control file-upload-info" placeholder="Upload Image">
+                                    <input type="file"
+                                           class="form-control file-upload-info" placeholder="Upload Image" name="thumbnail">
                                 </div>
+                                <code>${violations.get("thumbnail")}</code>
                             </div>
                             <div class="form-group">
                                 <label for="exampleTextarea1">Description</label>
@@ -52,7 +65,24 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-4 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Add Category</h4>
+                        <p class="card-description"> Add new category </p>
+                        <form class="forms-sample" method="post" action="">
+                            <div class="form-group">
+                                <label for="parentAttributeName">PCategory Name</label>
+                                <input type="text" class="form-control" id="categoryName" name="categoryName" placeholder="Category Name">
+                                <code>${violations.get("attributeName")}</code>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button class="btn btn-dark">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Add parent product attribute</h4>
@@ -69,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 grid-margin stretch-card">
+            <div class="col-md-4 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Add child product attribute</h4>
@@ -78,6 +108,7 @@
                             <div class="form-group">
                                 <label for="parentAttribute">Product Parent Attribute</label>
                                 <select class="form-control" id="parentAttribute" name="parentAttribute">
+                                    <option value="">--Please select</option>
                                     <c:forEach items="${productAttribute}" var="x">
                                         <option value="${x.id}">${x.attributeName}</option>
                                     </c:forEach>
@@ -97,7 +128,7 @@
             <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">All Parent Attribute</h4>
+                        <h4 class="card-title">All Category</h4>
                         <p class="card-description">All product</p>
                         <div class="table-responsive">
                             <table class="table">
@@ -123,7 +154,7 @@
             <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Child Attribute</h4>
+                        <h4 class="card-title">All Attribute</h4>
                         <p class="card-description">All Child</p>
                         <div class="table-responsive">
                             <table class="table">

@@ -22,9 +22,7 @@ public class TestApplication {
     @Test
     void testCategory(){
         IProductAttributeRepository repository = ContextUtil.getBean(IProductAttributeRepository.class);
-        repository.findById(1L).get()
-                .getChildAttributes()
-                .forEach(productAttribute -> System.out.println(productAttribute.getChildAttributes()));
+        System.out.println(repository.findCategory());
     }
 
 }

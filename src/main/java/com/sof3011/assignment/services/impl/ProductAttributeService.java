@@ -51,11 +51,17 @@ public class ProductAttributeService implements IProductAttributeService {
 
     @Override
     public List<String> getAllProductAttributeSlug() {
-        return productAttributeRepository.findAllSlugForProductAttribute();
+        return productAttributeRepository.findAllSlugForProductAttributeAndProductVariant(true);
     }
 
     @Override
     public List<ProductAttribute> getAllProductAttributeByIds(Set<Long> id) {
         return productAttributeRepository.findAllById(id);
     }
+
+    @Override
+    public ProductAttribute getCategory() {
+        return productAttributeRepository.findCategory();
+    }
+
 }

@@ -26,7 +26,7 @@
                    <c:forEach items="${products}" var="x">
                        <tr>
                            <td class="py-1">
-                               <img src="${pageContext.request.contextPath}/assets/admin/images/avt.jpg" alt="image" />
+                               <img src="${pageContext.request.contextPath}/assets/uploads/product-thumbnail/${x.thumbnail}" alt="image" />
                            </td>
                            <td> ${x.productName} </td>
                            <td> ${x.createdDate} </td>
@@ -44,8 +44,17 @@
                                    <td><label class="badge badge-danger">Unavailable</label></td>
                                </c:otherwise>
                            </c:choose>
-                           <td><a  class="btn-sm btn-success btn-fw"><i class="mdi mdi-window-restore"></i>Add variant</a></td>
-                           <td><a  class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color"></i>Edit</a></td>
+                           <td>
+                               <a href="${pageContext.request.contextPath}/admin/product/add    -product-variant?product=${x.slug}"
+                                  class="btn-sm btn-success btn-fw"><i class="mdi mdi-window-restore">
+                           </i>Add variant
+                               </a>
+                           </td>
+                           <td>
+                               <a  class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color">
+                               </i>Edit
+                               </a>
+                           </td>
                            <td>
                                <form method="post" action="${pageContext.request.contextPath}/admin/products/delete?productId=${x.id}">
                                    <button type="submit"  class="btn-sm btn-danger btn-fw"><i class="mdi mdi-bitbucket"></i>Delete</button>

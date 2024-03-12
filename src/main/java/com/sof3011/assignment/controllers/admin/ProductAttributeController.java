@@ -38,7 +38,8 @@ public class ProductAttributeController extends HttpServlet {
                 resp.sendRedirect("/admin/products/add-product");
             }
         }
-        if (uri.equals("/admin/attribute/add-child-product-attribute")){
+        else
+            if (uri.equals("/admin/attribute/add-child-product-attribute")){
             String name  =req.getParameter("childAttributeName");
             ProductAttribute productAttribute = ProductAttribute
                     .builder()
