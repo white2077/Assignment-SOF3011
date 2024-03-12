@@ -1,8 +1,9 @@
 package com.sof3011.assignment.controllers.admin;
 
 import com.sof3011.assignment.entities.Product;
+import com.sof3011.assignment.services.IProductAttributeService;
 import com.sof3011.assignment.services.IProductService;
-import com.sof3011.assignment.services.IService;
+import com.sof3011.assignment.services.impl.ProductAttributeService;
 import com.sof3011.assignment.services.impl.ProductService;
 import com.sof3011.assignment.utils.ContextUtil;
 import com.sof3011.assignment.utils.SlugUtil;
@@ -12,13 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.ConstraintViolation;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -26,8 +22,10 @@ import java.util.stream.Collectors;
 @WebServlet(value = {"/admin/products", "/admin/products/add-product","/admin/products/add-new","/admin/products/delete"})
 public class ProductController extends HttpServlet {
     private final IProductService productService = ContextUtil.getBean(ProductService.class);
+    private final IProductAttributeService productAttributeService = ContextUtil.getBean(ProductAttributeService.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProduct());
         String url = req.getRequestURI();
         if (url.equals("/admin/products")) {
             req.setAttribute("products",productService.getAll());
@@ -42,6 +40,12 @@ public class ProductController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
         if (uri.equals("/admin/products/add-new")){
+            Set<Long> ids =productAttributeService
+                    .getAllProductAttributeSlug()
+                    .stream()
+                    .map(s ->Long.valueOf(req.getParameter(s)))
+                    .collect(Collectors.toSet());
+            System.out.println(ids);
             String productName = req.getParameter("productName");
             Product product = Product.builder()
                     .productName(productName)
@@ -50,14 +54,10 @@ public class ProductController extends HttpServlet {
                     .thumbnail("123")
                     .status(true)
                     .build();
-            Set<ConstraintViolation<Product>> violations = ValidatorUtils.validate(product);
+            Map<String,String> violations = ValidatorUtils.validate(product);
             if (!violations.isEmpty()){
-                Map<String, String> violationMap = violations.stream()
-                        .collect(Collectors.toMap(
-                                violation -> violation.getPropertyPath().toString(),
-                                ConstraintViolation::getMessage
-                        ));
-                req.setAttribute("violations",violationMap);
+                req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProduct());
+                req.setAttribute("violations",violations);
                 req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req,resp);
             }
             else {
@@ -71,7 +71,4 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    }
 }

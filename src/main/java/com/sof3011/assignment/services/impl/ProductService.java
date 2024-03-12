@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService implements IProductService {
@@ -18,6 +20,11 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> getAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Product getById(Long id) {
+        return null;
     }
 
     @Override
@@ -44,5 +51,10 @@ public class ProductService implements IProductService {
     @Override
     public int getAllProductPage(Pageable pageable) {
         return 0;
+    }
+
+    @Override
+    public Product getBySlug(String slug) {
+        return repository.findBySlug(slug).orElseThrow(() -> new NoSuchElementException("not found"));
     }
 }

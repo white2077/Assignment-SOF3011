@@ -15,6 +15,11 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public Customer getById(Long id) {
+        return null;
+    }
+
+    @Override
     public Customer insert(Customer e) {
         return null;
     }

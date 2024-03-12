@@ -34,15 +34,16 @@ public class Product extends CoreEntity {
     @Size(min = 6,message = "slug must more than 6 character")
     @Column(name = "slug",columnDefinition = "nvarchar(255)" ,nullable = false)
     private String slug;
+    @NotBlank(message = "Descriptions is not blank")
+    @Column(name = "description",columnDefinition = "Text")
+    private String description;
     @NotBlank(message = "Thumbnail is not null or blank")
     @Column(name = "thumbnail")
     private String thumbnail;
 
     @OneToMany(mappedBy = "product")
     private List<ProductVariant> productVariants;
-    @NotBlank(message = "Descriptions is not blank")
-    @Column(name = "description",columnDefinition = "Text")
-    private String description;
+
     @ManyToMany
-    private Set<ProductAttribute> productAttributes;
+    private Set<ProductAttribute> productAttribute;
 }

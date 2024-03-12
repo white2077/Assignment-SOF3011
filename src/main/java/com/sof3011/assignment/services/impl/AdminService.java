@@ -16,6 +16,11 @@ public class AdminService implements IAdminService {
     }
 
     @Override
+    public Admin getById(Long id) {
+        return null;
+    }
+
+    @Override
     public Admin insert(Admin e) {
         return null;
     }

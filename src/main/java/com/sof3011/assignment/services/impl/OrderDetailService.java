@@ -20,6 +20,11 @@ public class OrderDetailService implements IOrderDetaiService {
     }
 
     @Override
+    public OrderDetail getById(Long id) {
+        return null;
+    }
+
+    @Override
     public OrderDetail insert(OrderDetail e) {
         return null;
     }

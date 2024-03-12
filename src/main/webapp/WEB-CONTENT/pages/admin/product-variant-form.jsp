@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<title>Admin - Add Product</title>
+<title>Admin - Add Product Variant</title>
 <body>
 <div class="main-panel">
     <div class="content-wrapper">
@@ -21,13 +21,17 @@
                         <form class="forms-sample" action="${pageContext.request.contextPath}/admin/products/add-new" method="post">
                             <div class="form-group">
                                 <label for="productName">Product name</label>
-                                <input type="text" class="form-control" id="productName" name="productName" placeholder="Product Name">
+                                <input type="text" class="form-control" id="productName" name="productName" value="${productName}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="variantName">VariantName name</label>
+                                <input type="text" class="form-control" id="variantName" name="variantName" placeholder="Product Name">
                                 <code>${violations.get("productName")}</code>
                             </div>
                             <c:forEach items="${productAttribute}" var="x">
                                 <div class="form-group">
                                     <label for="exampleSelectGender">${x.attributeName}</label>
-                                    <select class="form-control" name="${x.slug}" id="exampleSelectGender">
+                                    <select class="form-control" id="exampleSelectGender">
                                         <c:forEach items="${x.childAttributes}" var="child">
                                             <option value="${child.id}">${child.attributeName}</option>
                                         </c:forEach>
@@ -57,7 +61,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Add parent product attribute</h4>
                         <p class="card-description"> Add new parent attribute </p>
-                        <form class="forms-sample" method="post" action="${pageContext.request.contextPath}/admin/attribute/add-parent-product-attribute">
+                        <form class="forms-sample" method="post" action="${pageContext.request.contextPath}/admin/attribute/add-parent-attribute">
                             <div class="form-group">
                                 <label for="parentAttributeName">Parent Attribute Name</label>
                                 <input type="text" class="form-control" id="parentAttributeName" name="parentAttributeName" placeholder="Attribute Name">
@@ -74,19 +78,18 @@
                     <div class="card-body">
                         <h4 class="card-title">Add child product attribute</h4>
                         <p class="card-description"> Add new attribute </p>
-                        <form class="forms-sample" method="post" action="${pageContext.request.contextPath}/admin/attribute/add-child-product-attribute">
+                        <form class="forms-sample">
                             <div class="form-group">
                                 <label for="parentAttribute">Product Parent Attribute</label>
-                                <select class="form-control" id="parentAttribute" name="parentAttribute">
+                                <select class="form-control" id="parentAttribute">
                                     <c:forEach items="${productAttribute}" var="x">
-                                        <option value="${x.id}">${x.attributeName}</option>
+                                        <option>${x.attributeName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="childAttributeName">Child Attribute Name</label>
-                                <input type="text" class="form-control" id="childAttributeName" name="childAttributeName" placeholder="Attribute Name">
-                                <code>${violations.get("attributeName")}</code>
+                                <input type="text" class="form-control" id="childAttributeName" placeholder="Attribute Name">
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                             <button class="btn btn-dark">Cancel</button>

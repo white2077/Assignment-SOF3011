@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 @Service
 @RequiredArgsConstructor
 public class ProductVariantService implements IProductVariantService {
@@ -15,6 +17,11 @@ public class ProductVariantService implements IProductVariantService {
     @Override
     public List<ProductVariant> getAll() {
         return iProductVariantRepository.findAll();
+    }
+
+    @Override
+    public ProductVariant getById(Long id) {
+        return iProductVariantRepository.findById(id).orElseThrow(() -> new NoSuchElementException("not found"));
     }
 
     @Override

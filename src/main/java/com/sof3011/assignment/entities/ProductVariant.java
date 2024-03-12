@@ -2,6 +2,7 @@ package com.sof3011.assignment.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Entity(name = "product_variants")
 @AllArgsConstructor
@@ -33,6 +36,8 @@ public class ProductVariant extends CoreEntity {
     @Column(name = "status", nullable = false)
     private boolean status;
 
+    @ManyToMany
+    private Set<ProductAttribute> productVariantAttributes;
     @ManyToOne
     private Product product;
 }

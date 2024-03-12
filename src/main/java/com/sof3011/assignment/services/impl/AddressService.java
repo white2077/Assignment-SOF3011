@@ -16,6 +16,11 @@ public class AddressService implements IAddressService {
     }
 
     @Override
+    public Address getById(Long id) {
+        return null;
+    }
+
+    @Override
     public Address insert(Address e) {
         return null;
     }
