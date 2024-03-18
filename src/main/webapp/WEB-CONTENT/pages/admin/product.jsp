@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <title>Admin - All Products</title>
 <body>
 <div class="main-panel">
@@ -16,8 +17,9 @@
                         <th> ProductName </th>
                         <th> Creation date</th>
                         <th> Modified date</th>
+                        <th> Category </th>
                         <th> Status </th>
-                        <th> Add Variant </th>
+                        <th> Add Variant</th>
                         <th> Edit </th>
                         <th> Delete </th>
                     </tr>
@@ -29,13 +31,18 @@
                                <img src="${pageContext.request.contextPath}/assets/uploads/product-thumbnail/${x.thumbnail}" alt="image" />
                            </td>
                            <td> ${x.productName} </td>
-                           <td> ${x.createdDate} </td>
+                           <td><fmt:formatDate value="${x.createdDate}"/> </td>
                            <c:choose>
                                <c:when test="${x.modifiedDate == null}"><td>No modifier</td></c:when>
                                <c:otherwise>
-                                   <td> ${x.modifiedDate} </td>
+                                   <td> <fmt:formatDate value="${x.modifiedDate}"/> </td>
                                </c:otherwise>
                            </c:choose>
+                           <td>
+                               <c:forEach items="${x.productAttribute}" var="c">
+                                   ${c.attributeName},
+                               </c:forEach>
+                           </td>
                            <c:choose>
                                <c:when test="${x.status}">
                                    <td><label class="badge badge-success">Available</label></td>
@@ -45,7 +52,7 @@
                                </c:otherwise>
                            </c:choose>
                            <td>
-                               <a href="${pageContext.request.contextPath}/admin/product/add    -product-variant?product=${x.slug}"
+                               <a href="${pageContext.request.contextPath}/admin/product/add-product-variant-page?product=${x.slug}"
                                   class="btn-sm btn-success btn-fw"><i class="mdi mdi-window-restore">
                            </i>Add variant
                                </a>

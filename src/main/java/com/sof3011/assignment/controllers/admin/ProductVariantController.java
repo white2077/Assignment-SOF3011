@@ -16,7 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet(value = {"/admin/product/add-product-variant"})
+@WebServlet(value = {"/admin/product/add-product-variant-page",
+        "/admin/product/add-product-variant"})
 
 public class ProductVariantController extends HttpServlet {
     private final IProductVariantService variantRepository = ContextUtil.getBean(ProductVariantService.class);
@@ -29,7 +30,6 @@ public class ProductVariantController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String slug = req.getParameter("product");
         product = productService.getBySlug(slug);
-        req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
         req.setAttribute("productName",product.getProductName());
         req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form.jsp").forward(req,resp);
     }

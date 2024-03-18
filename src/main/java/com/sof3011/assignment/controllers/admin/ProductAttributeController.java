@@ -12,49 +12,81 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(value = {"/admin/attribute/add-parent-product-attribute","/admin/attribute/add-child-product-attribute"})
+@WebServlet(value = {"/admin/attribute/add-parent-attribute"
+        , "/admin/attribute/add-child-product-attribute"
+        , "/admin/attribute/add-category","/admin/attribute/all-attributes-page"})
 public class ProductAttributeController extends HttpServlet {
     private final IProductAttributeService productAttributeService = ContextUtil.getBean(ProductAttributeService.class);
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String uri = req.getRequestURI();
+        if (uri.equals("/admin/attribute/all-attributes-page")){
+            req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-attribute.jsp").forward(req,resp);
+        }
+    }
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
-        if (uri.equals("/admin/attribute/add-parent-product-attribute")) {
+        if (uri.contains("/admin/attribute/add-parent-attribute")) {
             String name = req.getParameter("parentAttributeName");
             ProductAttribute productAttribute = ProductAttribute
                     .builder()
                     .attributeName(name)
+                    .attributeType(false)
+                    .slug(SlugUtil.convertNameToSlug(name))
+                    .build();
+            Map<String, String> violations = ValidatorUtils.validate(productAttribute);
+            if (!violations.isEmpty()) {
+                req.setAttribute("violations", violations);
+                req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-attribute.jsp").forward(req, resp);
+            } else {
+                productAttributeService.insert(productAttribute);
+                resp.sendRedirect("/admin/attribute/all-attributes-page");
+            }
+        } else if (uri.equals("/admin/attribute/add-child-product-attribute")) {
+            String name = req.getParameter("childAttributeName");
+            System.out.println(name);
+            ProductAttribute productAttribute = ProductAttribute
+                    .builder()
+                    .attributeName(name)
+                    .attributeParent(productAttributeService.getById(Long.parseLong(req.getParameter("parentAttributeId"))))
                     .attributeType(true)
                     .slug(SlugUtil.convertNameToSlug(name))
                     .build();
             Map<String, String> violations = ValidatorUtils.validate(productAttribute);
             if (!violations.isEmpty()) {
                 req.setAttribute("violations", violations);
-                req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req, resp);
+                req.setAttribute("productAttribute", productAttributeService.getAllParentAttributeProduct());
+                req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
+                req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-attribute.jsp").forward(req, resp);
             } else {
                 productAttributeService.insert(productAttribute);
-                resp.sendRedirect("/admin/products/add-product");
+                resp.sendRedirect("/admin/attribute/all-attributes-page");
             }
-        }
-        else
-            if (uri.equals("/admin/attribute/add-child-product-attribute")){
-            String name  =req.getParameter("childAttributeName");
+        } else if (uri.contains("/admin/attribute/add-category")) {
+            ProductAttribute category = productAttributeService.getCategory();
+            String name = req.getParameter("categoryName");
             ProductAttribute productAttribute = ProductAttribute
                     .builder()
                     .attributeName(name)
-                    .attributeParent(productAttributeService.getById(Long.valueOf(req.getParameter("parentAttribute"))))
-                    .attributeType(true)
+                    .attributeType(null)
                     .slug(SlugUtil.convertNameToSlug(name))
+                    .attributeParent(category)
                     .build();
             Map<String,String> violations = ValidatorUtils.validate(productAttribute);
             if (!violations.isEmpty()){
-                req.setAttribute("violations",violations);
-                req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProduct());
-                req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req,resp);
+                req.setAttribute("violations", violations);
+                req.setAttribute("categories",category);
+                req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req, resp);
             }
-            else {
+            else{
                 productAttributeService.insert(productAttribute);
                 resp.sendRedirect("/admin/products/add-product");
             }

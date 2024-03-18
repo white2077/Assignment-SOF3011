@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -48,11 +50,19 @@ public class ProductController extends HttpServlet {
             String name  = UUID.randomUUID() + thumbnail.getSubmittedFileName();
             String path = "/assets/uploads/product-thumbnail/"+name;
             String fileName = req.getServletContext().getRealPath(path);
-            Set<Long> ids = productAttributeService
-                    .getAllProductAttributeSlug()
-                    .stream()
-                    .map(s ->Long.valueOf(req.getParameter(s)))
-                    .collect(Collectors.toSet());
+//            Set<Long> ids = productAttributeService
+//                    .getAllProductAttributeSlug()
+//                    .stream()
+//                    .map(s ->Long.valueOf(req.getParameter(s)))
+//                    .collect(Collectors.toSet());
+            String[] categoriesIdArray = req.getParameterValues("categoriesId");
+            Set<Long> categoriesIdSet = new HashSet<>();
+            if (categoriesIdArray != null) {
+                categoriesIdSet = Arrays.stream(categoriesIdArray)
+                        .map(Long::parseLong)
+                        .collect(Collectors.toSet());
+            }
+
             String productName = req.getParameter("productName");
             Product product = Product
                     .builder()
@@ -60,17 +70,19 @@ public class ProductController extends HttpServlet {
                     .description(req.getParameter("description"))
                     .slug(SlugUtil.convertNameToSlug(productName))
                     .thumbnail(name)
+                    .productAttribute(productAttributeService.getAllProductAttributeByIds(categoriesIdSet))
                     .status(true)
                     .build();
             Map<String,String> violations = ValidatorUtils.validate(product);
             if (!violations.isEmpty()){
                 req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProduct());
                 req.setAttribute("violations",violations);
+                req.setAttribute("categories",productAttributeService.getCategory());
                 req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req,resp);
             }
             else {
-                productService.insert(product);
                 thumbnail.write(fileName);
+                productService.insert(product);
                 resp.sendRedirect("/admin/products");
             }
         }

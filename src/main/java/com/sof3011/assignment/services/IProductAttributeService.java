@@ -9,7 +9,7 @@ public interface IProductAttributeService extends IService<ProductAttribute,Long
     List<ProductAttribute> getAllParentAttributeProduct();
     List<ProductAttribute> getAllParentAttributeProductVariant();
     List<String> getAllProductAttributeSlug();
-    List<ProductAttribute> getAllProductAttributeByIds(Set<Long> id);
+    Set<ProductAttribute> getAllProductAttributeByIds(Set<Long> id);
     ProductAttribute getCategory();
 
 }

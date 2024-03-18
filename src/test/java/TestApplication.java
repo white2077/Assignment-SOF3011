@@ -24,5 +24,4 @@ public class TestApplication {
         IProductAttributeRepository repository = ContextUtil.getBean(IProductAttributeRepository.class);
         System.out.println(repository.findCategory());
     }
-
 }

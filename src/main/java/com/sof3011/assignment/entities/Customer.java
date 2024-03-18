@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -42,9 +43,8 @@ public class Customer extends CoreEntity {
     @OneToMany(mappedBy = "customer")
     private List<OrderDetail> orderDetails;
 
-    @ManyToMany
-    @JoinTable(name = "cart")
-    private List<ProductVariant> cartItems;
+    @OneToMany(mappedBy = "customer")
+    private List<Cart> cartItems;
     @OneToMany(mappedBy = "customer")
     private List<Address> addresses;
 }

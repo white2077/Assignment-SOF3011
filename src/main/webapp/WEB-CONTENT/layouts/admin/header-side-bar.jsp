@@ -73,6 +73,14 @@
             </a>
         </li>
         <li class="nav-item menu-items">
+            <a class="nav-link" href="${pageContext.request.contextPath}/admin/attribute/all-attributes-page">
+                <span class="menu-icon">
+                  <i class="mdi mdi-playlist-play"></i>
+                </span>
+                <span class="menu-title">Product Attribute</span>
+            </a>
+        </li>
+        <li class="nav-item menu-items">
             <a class="nav-link" href="${pageContext.request.contextPath}/admin/customers">
                 <span class="menu-icon">
                   <i class="mdi mdi-contacts"></i>
@@ -252,4 +260,3 @@
             </button>
         </div>
     </nav>
-    <!-- partial -->

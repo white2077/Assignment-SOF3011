@@ -6,6 +6,7 @@ import com.sof3011.assignment.services.IProductAttributeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -55,8 +56,8 @@ public class ProductAttributeService implements IProductAttributeService {
     }
 
     @Override
-    public List<ProductAttribute> getAllProductAttributeByIds(Set<Long> id) {
-        return productAttributeRepository.findAllById(id);
+    public Set<ProductAttribute> getAllProductAttributeByIds(Set<Long> id) {
+        return new HashSet<>(productAttributeRepository.findAllById(id));
     }
 
     @Override
