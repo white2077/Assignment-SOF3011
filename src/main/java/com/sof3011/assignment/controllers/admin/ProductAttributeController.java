@@ -52,7 +52,6 @@ public class ProductAttributeController extends HttpServlet {
             }
         } else if (uri.equals("/admin/attribute/add-child-product-attribute")) {
             String name = req.getParameter("childAttributeName");
-            System.out.println(name);
             ProductAttribute productAttribute = ProductAttribute
                     .builder()
                     .attributeName(name)
