@@ -105,7 +105,6 @@ public class ProductController extends HttpServlet {
                     .getAllProductAttributeByIds
                             (categoriesIdSet(req.getParameterValues("categoriesId"))));
             Map<String,String> violations = ValidatorUtils.validate(product);
-            System.out.println(thumbnail.getSize());
             if (!violations.isEmpty()){
                 req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProduct());
                 if (thumbnail.getSize() > 0){
