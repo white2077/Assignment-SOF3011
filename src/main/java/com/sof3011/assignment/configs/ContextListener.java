@@ -17,20 +17,13 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         applicationContext = new AnnotationConfigApplicationContext(JpaConfig.class);
         System.out.println("Spring data active status: " + applicationContext.isActive());
-        ContextUtil.getBean(IProductAttributeRepository.class)
-                .save(ProductAttribute
-                        .builder()
-                        .attributeName("Category")
-                        .slug(SlugUtil.convertNameToSlug("category"))
-                        .childAttributes(Set.of(ProductAttribute.builder().build()))
-                        .attributeType(null)
-                        .build());
-    }
-
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        if (applicationContext != null) {
-            applicationContext.close();
-        }
+//        ContextUtil.getBean(IProductAttributeRepository.class)
+//                .save(ProductAttribute
+//                        .builder()
+//                        .attributeName("Category")
+//                        .slug(SlugUtil.convertNameToSlug("category"))
+//                        .childAttributes(Set.of(ProductAttribute.builder().build()))
+//                        .attributeType(null)
+//                        .build());
     }
 }

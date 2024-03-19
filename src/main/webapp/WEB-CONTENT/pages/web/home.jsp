@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <title>Electro - Ecommerce</title>
+<body>
 <div class="section">
     <!-- container -->
     <div class="container">
@@ -315,3 +316,4 @@
     </div>
     <!-- /container -->
 </div>
+</body>

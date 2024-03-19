@@ -24,7 +24,7 @@ public class ProductService implements IProductService {
 
     @Override
     public Product getById(Long id) {
-        return null;
+        return repository.findById(id).orElseThrow(() -> new NoSuchElementException("not found"));
     }
 
     @Override

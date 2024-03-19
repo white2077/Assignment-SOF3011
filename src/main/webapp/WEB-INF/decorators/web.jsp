@@ -15,12 +15,13 @@
   <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/web/css/nouislider.min.css"/>
   <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/web/css/font-awesome.min.css">
   <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/web/css/style.css"/>
-
 </head>
 <body>
-<jsp:include page="../../WEB-CONTENT/layouts/web/header.jsp"/>
+<%@include file="../../WEB-CONTENT/layouts/web/header.jsp"%>
+
 <sitemesh:write property="body"/>
-<jsp:include page="../../WEB-CONTENT/layouts/web/footer.jsp"/>
+
+<%@include file="../../WEB-CONTENT/layouts/web/footer.jsp"%>
 </body>
 <script src="${pageContext.request.contextPath}/assets/web/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/web/js/bootstrap.min.js"></script>

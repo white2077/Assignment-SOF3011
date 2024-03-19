@@ -25,12 +25,19 @@ public class ProductVariantController extends HttpServlet {
     private final IProductAttributeService productAttributeService = ContextUtil.getBean(ProductAttributeService.class);
 
 
-    private Product product;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String slug = req.getParameter("product");
-        product = productService.getBySlug(slug);
-        req.setAttribute("productName",product.getProductName());
+        Product product = productService.getBySlug(slug);
+        req.setAttribute("productName", product.getProductName());
         req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form.jsp").forward(req,resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String uri = req.getRequestURI();
+        if (uri.equals("/admin/product/add-product-variant")){
+            resp.sendRedirect("/admin/products");
+        }
     }
 }

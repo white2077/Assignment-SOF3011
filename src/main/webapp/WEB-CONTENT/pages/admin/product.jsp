@@ -58,7 +58,7 @@
                                </a>
                            </td>
                            <td>
-                               <a  class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color">
+                               <a href="${pageContext.request.contextPath}/admin/products/update-product?productId=${x.id}" class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color">
                                </i>Edit
                                </a>
                            </td>
