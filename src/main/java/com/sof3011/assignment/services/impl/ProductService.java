@@ -57,4 +57,9 @@ public class ProductService implements IProductService {
     public Product getBySlug(String slug) {
         return repository.findBySlug(slug).orElseThrow(() -> new NoSuchElementException("not found"));
     }
+
+    @Override
+    public List<Product> getTop5NewestProduct() {
+        return repository.findTop5ByStatusIsTrueOrderByCreatedDateDesc();
+    }
 }

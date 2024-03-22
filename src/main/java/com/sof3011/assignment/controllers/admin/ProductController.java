@@ -1,8 +1,10 @@
 package com.sof3011.assignment.controllers.admin;
 
 import com.sof3011.assignment.entities.Product;
+import com.sof3011.assignment.services.IFileService;
 import com.sof3011.assignment.services.IProductAttributeService;
 import com.sof3011.assignment.services.IProductService;
+import com.sof3011.assignment.services.impl.FileService;
 import com.sof3011.assignment.services.impl.ProductAttributeService;
 import com.sof3011.assignment.services.impl.ProductService;
 import com.sof3011.assignment.utils.ContextUtil;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
                 "/admin/products/update-product",
                 "/admin/products/update"})
 public class ProductController extends HttpServlet {
+    private final IFileService fileService = new FileService();
     private final IProductService productService = ContextUtil.getBean(ProductService.class);
     private final IProductAttributeService productAttributeService = ContextUtil.getBean(ProductAttributeService.class);
     @Override
@@ -56,22 +59,14 @@ public class ProductController extends HttpServlet {
         String uri = req.getRequestURI();
         if (uri.equals("/admin/products/add-new")){
             Part thumbnail = req.getPart("thumbnail");
-            String name  = UUID.randomUUID() + thumbnail.getSubmittedFileName();
-            String path = "/assets/uploads/product-thumbnail/"+name;
-            String fileName = req.getServletContext().getRealPath(path);
-//            Set<Long> ids = productAttributeService
-//                    .getAllProductAttributeSlug()
-//                    .stream()
-//                    .map(s ->Long.valueOf(req.getParameter(s)))
-//                    .collect(Collectors.toSet());
-
+            String fileName = fileService.getFileName(thumbnail,req);
             String productName = req.getParameter("productName");
             Product product = Product
                     .builder()
                     .productName(productName)
                     .description(req.getParameter("description"))
                     .slug(SlugUtil.convertNameToSlug(productName))
-                    .thumbnail(name)
+                    .thumbnail(fileService.getName())
                     .productAttribute(productAttributeService
                             .getAllProductAttributeByIds
                                     (categoriesIdSet(req.getParameterValues("categoriesId"))))
@@ -115,10 +110,8 @@ public class ProductController extends HttpServlet {
                 req.setAttribute("categories",productAttributeService.getCategory());
                 req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req,resp);
             } else if (thumbnail.getSize() > 0){
-                String name  = UUID.randomUUID() + thumbnail.getSubmittedFileName();
-                String path = "/assets/uploads/product-thumbnail/"+name;
-                String fileName = req.getServletContext().getRealPath(path);
-                product.setThumbnail(name);
+                String fileName = fileService.getFileName(thumbnail,req);
+                product.setThumbnail(fileService.getName());
                 thumbnail.write(fileName);
                 productService.update(product);
                 resp.sendRedirect("/admin/products");

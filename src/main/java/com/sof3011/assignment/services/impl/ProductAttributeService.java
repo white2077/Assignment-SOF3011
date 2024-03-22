@@ -51,8 +51,8 @@ public class ProductAttributeService implements IProductAttributeService {
     }
 
     @Override
-    public List<String> getAllProductAttributeSlug() {
-        return productAttributeRepository.findAllSlugForProductAttributeAndProductVariant(true);
+    public List<String> getAllProductVariantAttributeSlug() {
+        return productAttributeRepository.findAllSlugForProductAttributeAndProductVariant(false);
     }
 
     @Override
@@ -65,4 +65,8 @@ public class ProductAttributeService implements IProductAttributeService {
         return productAttributeRepository.findCategory();
     }
 
+    @Override
+    public Set<ProductAttribute> getAllBySetIds(Set<Long> ids) {
+        return new HashSet<>(productAttributeRepository.findAllById(ids));
+    }
 }

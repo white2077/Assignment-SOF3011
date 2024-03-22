@@ -26,6 +26,7 @@ public class ProductVariantService implements IProductVariantService {
 
     @Override
     public ProductVariant insert(ProductVariant e) {
+        e.setStatus(true);
         return iProductVariantRepository.save(e);
     }
 

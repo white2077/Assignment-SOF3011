@@ -39,6 +39,7 @@
                             <div class="form-group">
                                 <label for="parentAttribute">Product Parent Attribute</label>
                                 <select class="form-control" id="parentAttribute" name="parentAttributeId">
+                                    <option value="">--Please select</option>
                                     <c:forEach items="${productAttribute}" var="x">
                                         <option value="${x.id}">${x.attributeName}</option>
                                     </c:forEach>

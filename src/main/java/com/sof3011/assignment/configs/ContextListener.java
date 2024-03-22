@@ -11,12 +11,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.util.Set;
 
 public class ContextListener implements ServletContextListener {
-    private AnnotationConfigApplicationContext applicationContext;
-
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        applicationContext = new AnnotationConfigApplicationContext(JpaConfig.class);
-        System.out.println("Spring data active status: " + applicationContext.isActive());
+       ContextUtil.getBean(JpaConfig.class);
 //        ContextUtil.getBean(IProductAttributeRepository.class)
 //                .save(ProductAttribute
 //                        .builder()

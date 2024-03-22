@@ -10,13 +10,17 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
 @Entity(name = "product_variants")
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 public class ProductVariant extends CoreEntity {
     @Size(min = 6)
@@ -29,7 +33,7 @@ public class ProductVariant extends CoreEntity {
     @Column(name = "quantity")
     @Min(value = 1)
     private int quantity;
-    @NotBlank
+    @Size(min = 37,message = "please choose image")
     @Column(name = "image")
     private String image;
     @NotNull

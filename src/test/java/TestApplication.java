@@ -22,6 +22,11 @@ public class TestApplication {
     @Test
     void testCategory(){
         IProductAttributeRepository repository = ContextUtil.getBean(IProductAttributeRepository.class);
-        System.out.println(repository.findCategory());
+        repository.findAllSlugForProductAttributeAndProductVariant(false).forEach(System.out::println);
+    }
+    @Test
+    void testSlug(){
+        IProductRepository repository = ContextUtil.getBean(IProductRepository.class);
+        repository.findTop5ByStatusIsTrueOrderByCreatedDateDesc().forEach(product -> System.out.println(product.getSlug()));
     }
 }

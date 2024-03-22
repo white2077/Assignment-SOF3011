@@ -8,8 +8,9 @@ import java.util.Set;
 public interface IProductAttributeService extends IService<ProductAttribute,Long> {
     List<ProductAttribute> getAllParentAttributeProduct();
     List<ProductAttribute> getAllParentAttributeProductVariant();
-    List<String> getAllProductAttributeSlug();
+    List<String> getAllProductVariantAttributeSlug();
     Set<ProductAttribute> getAllProductAttributeByIds(Set<Long> id);
     ProductAttribute getCategory();
+    Set<ProductAttribute> getAllBySetIds(Set<Long> ids);
 
 }

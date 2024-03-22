@@ -33,7 +33,7 @@
                            <td> ${x.productName} </td>
                            <td><fmt:formatDate value="${x.createdDate}"/> </td>
                            <c:choose>
-                               <c:when test="${x.modifiedDate == null}"><td>No modifier</td></c:when>
+                               <c:when test="${x.modifiedDate == null}"><td>No modified</td></c:when>
                                <c:otherwise>
                                    <td> <fmt:formatDate value="${x.modifiedDate}"/> </td>
                                </c:otherwise>

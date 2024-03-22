@@ -9,4 +9,5 @@ public interface IProductService extends IService<Product,Long>{
     List<Product> getAllProductFromPage(Pageable pageable);
     int getAllProductPage(Pageable pageable);
     Product getBySlug(String slug);
+    List<Product> getTop5NewestProduct();
 }
