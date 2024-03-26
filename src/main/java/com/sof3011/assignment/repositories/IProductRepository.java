@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface IProductRepository extends JpaRepository<Product,Long> {
      Optional<Product> findBySlug(String slug);
-     List<Product> findTop5ByStatusIsTrueOrderByCreatedDateDesc();
+     List<Product> findTop8ByStatusIsTrueOrderByCreatedDateDesc();
 }

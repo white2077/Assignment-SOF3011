@@ -14,7 +14,7 @@ public class WebController extends HttpServlet {
     private final IProductService productService = ContextUtil.getBean(IProductService.class);
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("top5Product",productService.getTop5NewestProduct());
+        req.setAttribute("top8Product",productService.getTop8NewestProduct());
         req.getRequestDispatcher("WEB-CONTENT/pages/web/home.jsp").forward(req,resp);
     }
 }

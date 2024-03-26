@@ -24,7 +24,7 @@
                         <th> Delete </th>
                     </tr>
                     </thead>
-                    <tbody ng-controller="deleteCtrl">
+                    <tbody>
                    <c:forEach items="${products}" var="x">
                        <tr>
                            <td class="py-1">
@@ -58,7 +58,7 @@
                                </a>
                            </td>
                            <td>
-                               <a href="${pageContext.request.contextPath}/admin/products/update-product?productId=${x.id}" class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color">
+                               <a href="${pageContext.request.contextPath}/admin/products/update-product?product=${x.slug}" class="btn-sm btn-warning btn-fw"><i class="mdi mdi-border-color">
                                </i>Edit
                                </a>
                            </td>

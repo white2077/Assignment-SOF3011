@@ -6,6 +6,7 @@ import jakarta.servlet.http.Part;
 import lombok.Getter;
 
 import java.util.UUID;
+@Getter
 public class FileService implements IFileService {
     private String name;
 
@@ -21,7 +22,4 @@ public class FileService implements IFileService {
 
     }
 
-    public String getName() {
-        return name;
-    }
 }

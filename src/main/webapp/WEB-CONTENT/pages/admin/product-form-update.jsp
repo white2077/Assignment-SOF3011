@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <h4 class="card-title">Product ID: ${product.id}</h4>
                         <p class="card-description"> update a product </p>
-                        <form class="forms-sample" action="${pageContext.request.contextPath}/admin/products/update?productId=${product.id}"
+                        <form class="forms-sample" action="${pageContext.request.contextPath}/admin/products/update?product=${product.slug}"
                               enctype="multipart/form-data" method="post" accept="image/png, image/gif, image/jpeg">
                             <div class="form-group">
                                 <label for="productName">Product name</label>

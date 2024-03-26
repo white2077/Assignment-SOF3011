@@ -50,7 +50,7 @@ public class ProductController extends HttpServlet {
             req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form.jsp").forward(req,resp);
         }
         if (url.contains("/admin/products/update-product")){
-            req.setAttribute("product",productService.getById(Long.valueOf(req.getParameter("productId"))));
+            req.setAttribute("product",productService.getBySlug(req.getParameter("product")));
             req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-form-update.jsp").forward(req,resp);
         }
     }
@@ -92,7 +92,7 @@ public class ProductController extends HttpServlet {
         else if(uri.contains("/update")) {
             Part thumbnail = req.getPart("thumbnail");
             String productName = req.getParameter("productName");
-            Product product = productService.getById(Long.valueOf(req.getParameter("productId")));
+            Product product = productService.getBySlug(req.getParameter("product"));
             product.setProductName(productName);
             product.setDescription(req.getParameter("description"));
             product.setSlug(SlugUtil.convertNameToSlug(productName));

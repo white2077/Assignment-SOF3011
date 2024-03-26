@@ -1,9 +1,6 @@
 package com.sof3011.assignment.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,8 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name = "products")
 @AllArgsConstructor
@@ -42,9 +38,24 @@ public class Product extends CoreEntity {
     @Size(min = 37,message = "please choose thumbnail")
     @Column(name = "thumbnail")
     private String thumbnail;
-
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY)
     private List<ProductVariant> productVariants;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<ProductAttribute> productAttribute;
+
+    @Transient
+    private Map<String,Long> minMaxPrices;
+
+    public Map<String, Long> getMinMaxPrices() {
+        Map<String, Long> minMaxValues = new HashMap<>();
+        Optional<Long> min = productVariants.stream()
+                .map(ProductVariant::getPrice)
+                .min(Long::compareTo);
+        Optional<Long> max = productVariants.stream()
+                .map(ProductVariant::getPrice)
+                .max(Long::compareTo);
+        min.ifPresent(value -> minMaxValues.put("min", value));
+        max.ifPresent(value -> minMaxValues.put("max", value));
+        return minMaxValues;
+    }
 }

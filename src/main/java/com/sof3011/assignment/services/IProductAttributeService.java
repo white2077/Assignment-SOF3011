@@ -5,7 +5,7 @@ import com.sof3011.assignment.entities.ProductAttribute;
 import java.util.List;
 import java.util.Set;
 
-public interface IProductAttributeService extends IService<ProductAttribute,Long> {
+public interface IProductAttributeService extends IServiceInterface<ProductAttribute,Long> {
     List<ProductAttribute> getAllParentAttributeProduct();
     List<ProductAttribute> getAllParentAttributeProductVariant();
     List<String> getAllProductVariantAttributeSlug();

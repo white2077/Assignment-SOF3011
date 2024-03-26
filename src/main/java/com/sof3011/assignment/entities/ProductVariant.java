@@ -1,5 +1,7 @@
 package com.sof3011.assignment.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -40,8 +42,10 @@ public class ProductVariant extends CoreEntity {
     @Column(name = "status", nullable = false)
     private boolean status;
 
+    @Expose
     @ManyToMany
     private Set<ProductAttribute> productVariantAttributes;
+    @Expose
     @ManyToOne
     private Product product;
 }

@@ -10,7 +10,7 @@
     <!-- plugins:css -->
     <link rel="stylesheet"
           href="${pageContext.request.contextPath}/assets/admin/vendors/mdi/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="../../assets/admin/vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/admin/vendors/css/vendor.bundle.base.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet"
@@ -31,7 +31,7 @@
 </head>
 <body>
 <div class="container-scroller">
-    <jsp:include page="../../WEB-CONTENT/layouts/admin/header-side-bar.jsp"/>
+    <%@include file="/WEB-CONTENT/layouts/admin/header-side-bar.jsp"%>
     <sitemesh:write property="body"/>
 
 </div>

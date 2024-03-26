@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-    <mapping path="/" decorator="web.jsp"/>
+    <mapping path="/**" decorator="web.jsp"/>
     <mapping path="/admin/*" decorator="admin.jsp"/>
     <mapping path="/login" exclude="true"/>
     <mapping path="/register" exclude="true"/>
     <mapping path="/imageDisplay" exclude="true"/>
     <mapping path="/assets/*" exclude="true"/>
+    <mapping path="/add-to-cart/*" exclude="true"/>
 </sitemesh>
