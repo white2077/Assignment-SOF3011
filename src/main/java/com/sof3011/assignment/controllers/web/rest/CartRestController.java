@@ -31,7 +31,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 
-@WebServlet(value = {"/add-to-cart","/remove-from-cart","/get-cart"})
+@WebServlet(value = {"/add-to-cart","/remove-from-cart","/get-cart","/remove-cart-item"})
 public class CartRestController extends HttpServlet {
     private final IProductVariantService productVariantService = ContextUtil.getBean(IProductVariantService.class);
     private final ICookieService cookieService = new CookieService();
@@ -74,6 +74,8 @@ public class CartRestController extends HttpServlet {
                     for (Cart c : carts) {
                         if (c.getProductVariant().getId().equals(cart.getProductVariant().getId())) {
                             c.setQuantity(c.getQuantity() + cart.getQuantity());
+                            if (c.getQuantity() < 0)
+                                carts.remove(c);
                             break;
                         }
                     }
@@ -87,6 +89,7 @@ public class CartRestController extends HttpServlet {
                 carts.add(cart);
                 saveCookie(carts, resp);
             }
+            resp.getWriter().println(new Gson().toJson(carts));
         }
     }
     private void saveCookie(List<Cart> carts, HttpServletResponse resp) throws IOException {
@@ -109,28 +112,21 @@ public class CartRestController extends HttpServlet {
         Cookie cookie = new Cookie("cart", base64String);
         cookie.setMaxAge(60 * 60 * 24 * 30);
         cookie.setPath("/");
-        resp.getWriter().println(json);
         cookie.setHttpOnly(true);
         resp.addCookie(cookie);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BufferedReader reader = req.getReader();
-        StringBuilder jsonStringBuilder = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                jsonStringBuilder.append(line);
-            }
-            CartDTO.CartRequest cartRequest = new Gson().fromJson(jsonStringBuilder.toString(), CartDTO.CartRequest.class);
             List<Cart> carts = new ArrayList<>();
             String cartCookie = cookieService.getCookie(req, "cart");
             if (cartCookie != null) {
                 String decoded = new String(Base64.getDecoder().decode(cartCookie));
                 carts = new Gson().fromJson(decoded, new TypeToken<List<Cart>>() {
                 }.getType());
-                carts.removeIf(c -> c.getProductVariant().getId().equals(cartRequest.getProductVariantId()));
+                carts.removeIf(c -> c.getProductVariant().getId().equals(Long.parseLong(req.getParameter("id"))));
                 saveCookie(carts, resp);
             }
+            resp.getWriter().println(new Gson().toJson(carts));
     }
 }

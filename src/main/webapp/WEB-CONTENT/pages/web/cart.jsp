@@ -19,12 +19,12 @@
         </div>
     </div>
 </section>
-<section class="py-5">
+<section class="py-5" ng-app="myApp" ng-controller="cartCtrl">
     <h2 class="h5 text-uppercase mb-4">Shopping cart</h2>
     <div class="row">
         <div class="col-lg-8 mb-4 mb-lg-0">
             <!-- CART TABLE-->
-            <div class="table-responsive mb-4" ng-app="myApp" ng-controller="cartCtrl">
+            <div class="table-responsive mb-4" >
                 <table class="table text-nowrap">
                     <thead class="bg-light">
                     <tr>
@@ -48,16 +48,16 @@
                             <td class="p-3 align-middle border-light">
                                 <div class="border d-flex align-items-center justify-content-between px-3"><span class="small text-uppercase text-gray headings-font-family">Quantity</span>
                                     <div class="quantity">
-                                        <button class="dec-btn p-0"><i class="fas fa-caret-left"></i></button>
-                                        <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" value="{{cartItem.quantity}}"/>
-                                        <button class="inc-btn p-0"><i class="fas fa-caret-right"></i></button>
+                                        <button class="dec-btn p-0" ng-click="removeItems(cartItem.productVariant.id)"><i class="fas fa-caret-left"></i></button>
+                                        <input class="form-control form-control-sm border-0 shadow-0 p-0" type="text" ng-model="cartItem.quantity"/>
+                                        <button class="inc-btn p-0" ng-click="addItems(cartItem.productVariant.id)"><i class="fas fa-caret-right"></i></button>
                                     </div>
                                 </div>
                             </td>
                             <td class="p-3 align-middle border-light">
-                                <p class="mb-0 small">$250</p>
+                                <p class="mb-0 small">{{total}}</p>
                             </td>
-                            <td class="p-3 align-middle border-light"><a class="reset-anchor" ng-click="deleteFromCart()"><i class="fas fa-trash-alt small text-muted"></i></a></td>
+                            <td class="p-3 align-middle border-light"><a class="reset-anchor" ng-click="removeCartProduct(cartItem.productVariant.id)"><i class="fas fa-trash-alt small text-muted"></i></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -66,7 +66,9 @@
             <div class="bg-light px-4 py-3">
                 <div class="row align-items-center text-center">
                     <div class="col-md-6 mb-3 mb-md-0 text-md-start"><a class="btn btn-link p-0 text-dark btn-sm" href="shop.html"><i class="fas fa-long-arrow-alt-left me-2"> </i>Continue shopping</a></div>
-                    <div class="col-md-6 text-md-end"><a class="btn btn-outline-dark btn-sm" href="checkout.html">Procceed to checkout<i class="fas fa-long-arrow-alt-right ms-2"></i></a></div>
+                    <form method="post" action="${pageContext.request.contextPath}/checkout-cart">
+                        <div class="col-md-6 text-md-end"><button type="submit" class="btn btn-outline-dark btn-sm">Procceed to checkout<i class="fas fa-long-arrow-alt-right ms-2"></i></button></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -76,9 +78,9 @@
                 <div class="card-body">
                     <h5 class="text-uppercase mb-4">Cart total</h5>
                     <ul class="list-unstyled mb-0">
-                        <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">$250</span></li>
+                        <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">{{total}}</span></li>
                         <li class="border-bottom my-2"></li>
-                        <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>$250</span></li>
+                        <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>{{total}}</span></li>
                         <li>
                             <form action="#">
                                 <div class="input-group mb-0">
@@ -97,17 +99,63 @@
     let myApp = angular.module('myApp', []);
     myApp.controller('cartCtrl', function ($scope, $http) {
         $scope.cart = [];
-        $scope.deleteFromCart = function (productId) {
-            // $http.delete('/remove-from-cart?productId=' + productId).then(function (response) {
-            //     $scope.cart = response.data;
-            // });
-            console.log('delete')
-        }
+        let cartItemPost = {
+            productVariantId: 0,
+            quantity: 0
+        };
+        $scope.total = 0;
         getCart();
         function getCart() {
             $http.get('${pageContext.request.contextPath}/get-cart').then(function (response) {
                 $scope.cart = response.data;
-                console.log(response.data)
+            }).then(total).catch(function (error) {
+                total();
+            });
+        }
+         function total () {
+            let total = 0;
+            $scope.cart.forEach(function (cartItem) {
+                total += cartItem.productVariant.price * cartItem.quantity;
+            });
+             console.log(total)
+            $scope.total = total;
+        }
+        $scope.addItems = function (productId) {
+            $scope.cart.forEach(function (cartItem) {
+                if (cartItem.productVariant.id === productId) {
+                    cartItem.quantity++;
+                }
+            });
+            cartItemPost.productVariantId = productId;
+            cartItemPost.quantity = 1;
+            $http.post('${pageContext.request.contextPath}/add-to-cart', cartItemPost).then(function (response) {
+                $scope.cart = response.data;
+            }).catch(function (error) {
+                getCart();
+            });
+        }
+        $scope.removeItems = function (productId) {
+            $scope.cart.forEach(function (cartItem) {
+                if (cartItem.productVariant.id === productId) {
+                    cartItem.quantity--;
+                }
+            });
+            cartItemPost.productVariantId = productId;
+            cartItemPost.quantity = -1;
+            $http.post('${pageContext.request.contextPath}/add-to-cart', cartItemPost).then(function (response) {
+                $scope.cart = response.data;
+                getCart();
+            }).catch(function (error) {
+                getCart();
+            });
+        }
+        $scope.removeCartProduct = function (id) {
+            const API = 'http://localhost:8080/remove-cart-item?id='+id;
+            $http.delete(API).then(function (response) {
+                $scope.cart = response.data;
+                getCart();
+            }).catch(function (error) {
+                getCart();
             });
         }
     });

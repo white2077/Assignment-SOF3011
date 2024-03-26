@@ -22,7 +22,6 @@ public class CookieService implements ICookieService {
 
     @Override
     public void setCookie(HttpServletResponse httpResponse, String name, String value, int maxAge) {
-        System.out.println(123);
         Cookie cookie = new Cookie(name,value);
         cookie.setMaxAge(maxAge);
         cookie.setPath("/");

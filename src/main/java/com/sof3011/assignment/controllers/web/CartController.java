@@ -28,11 +28,11 @@ public class CartController extends HttpServlet {
             req.setAttribute("carts", null);
         }else{
             String decoded = new String(Base64.getDecoder().decode(cart));
-            System.out.println(decoded);
             List<Cart> carts = new Gson().fromJson(decoded, new TypeToken<List<Cart>>() {
             }.getType());
             req.setAttribute("carts", carts);
         }
         req.getRequestDispatcher("/WEB-CONTENT/pages/web/cart.jsp").forward(req, resp);
     }
+
 }
