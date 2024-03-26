@@ -25,35 +25,44 @@
     <h2 class="h5 text-uppercase mb-4">Billing details</h2>
     <div class="row">
         <div class="col-lg-8">
-            <form action="#">
+            <form action="${pageContext.request.contextPath}/checkout" method="post">
                 <div class="row gy-3">
                     <div class="col-lg-6">
-                        <label class="form-label text-sm text-uppercase" for="firstName">First name </label>
-                        <input class="form-control form-control-lg" type="text" id="firstName" placeholder="Enter your first name">
+                        <label class="form-label text-sm text-uppercase" for="fullName">Full name</label>
+                        <input class="form-control form-control-lg" type="text" id="fullName"
+                               name="customerName"
+                               placeholder="Enter your first name">
+                        <span style="color: red">${violations.get("customerName")}</span>
                     </div>
                     <div class="col-lg-6">
-                        <label class="form-label text-sm text-uppercase" for="lastName">Last name </label>
-                        <input class="form-control form-control-lg" type="text" id="lastName" placeholder="Enter your last name">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="form-label text-sm text-uppercase" for="email">Email address </label>
-                        <input class="form-control form-control-lg" type="email" id="email" placeholder="e.g. Jason@example.com">
-                    </div>
-                    <div class="col-lg-6">
-                        <label class="form-label text-sm text-uppercase" for="phone">Phone number </label>
-                        <input class="form-control form-control-lg" type="tel" id="phone" placeholder="e.g. +02 245354745">
+                        <label class="form-label text-sm text-uppercase" for="phone">Phone number</label>
+                        <input class="form-control form-control-lg"
+                               type="tel" id="phone" name="phoneNumber"
+                               placeholder="e.g. +02 245354745">
+                        <span style="color: red">${violations.get("phoneNumber")}</span>
                     </div>
                     <div class="col-lg-12">
                         <label class="form-label text-sm text-uppercase" for="address">Address</label>
-                        <input class="form-control form-control-lg" type="text" id="address" placeholder="House number and street name">
+                        <input class="form-control form-control-lg" type="text"
+                               id="address"
+                               placeholder="House number and street name"
+                        name="address">
+                        <span style="color: red">${violations.get("address")}</span>
+
                     </div>
                     <div class="col-lg-6">
-                        <label class="form-label text-sm text-uppercase" for="city">District </label>
-                        <input class="form-control form-control-lg" type="text" id="city">
+                        <label class="form-label text-sm text-uppercase" for="district">District</label>
+                        <input class="form-control form-control-lg" type="text" id="district"
+                        name="district">
+                        <span style="color: red">${violations.get("district")}</span>
+
                     </div>
                     <div class="col-lg-6">
-                        <label class="form-label text-sm text-uppercase" for="state">City/Province</label>
-                        <input class="form-control form-control-lg" type="text" id="state">
+                        <label class="form-label text-sm text-uppercase" for="cityOrProvince">City/Province</label>
+                        <input class="form-control form-control-lg" type="text" id="cityOrProvince"
+                        name="cityOrProvince">
+                        <span style="color: red">${violations.get("cityOrProvince")}</span>
+
                     </div>
                     <div class="col-lg-12 form-group">
                         <button class="btn btn-dark" type="submit">Place order</button>

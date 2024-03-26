@@ -57,7 +57,7 @@
                             <td class="p-3 align-middle border-light">
                                 <p class="mb-0 small">{{total}}</p>
                             </td>
-                            <td class="p-3 align-middle border-light"><a class="reset-anchor" ng-click="removeCartProduct(cartItem.productVariant.id)"><i class="fas fa-trash-alt small text-muted"></i></a></td>
+                            <td class="p-3 align-middle border-light"><a class="reset-anchor"><i ng-click="removeCartProduct(cartItem.productVariant.id)" class="fas fa-trash-alt small text-muted"></i></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -150,6 +150,7 @@
             });
         }
         $scope.removeCartProduct = function (id) {
+            console.log(123)
             const API = 'http://localhost:8080/remove-cart-item?id='+id;
             $http.delete(API).then(function (response) {
                 $scope.cart = response.data;

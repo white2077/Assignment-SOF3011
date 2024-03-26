@@ -7,22 +7,25 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity(name = "order_items")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class OrderItem extends CoreEntity {
-    @NotNull
     @ManyToOne
     private OrderDetail orderDetail;
-    @NotNull
     @ManyToOne
     private ProductVariant productVariant;
-    @NotNull
     @Min(value = 1)
     private long price;
+    @Min(value = 1)
+    private long quantity;
     @Column(name = "note",columnDefinition = "nvarchar(1000)")
     private String note;
 }

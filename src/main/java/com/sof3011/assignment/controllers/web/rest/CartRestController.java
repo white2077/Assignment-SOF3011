@@ -24,12 +24,6 @@ import java.util.Base64;
 import java.util.List;
 
 import com.google.gson.Gson;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
-
 
 @WebServlet(value = {"/add-to-cart","/remove-from-cart","/get-cart","/remove-cart-item"})
 public class CartRestController extends HttpServlet {
@@ -74,7 +68,7 @@ public class CartRestController extends HttpServlet {
                     for (Cart c : carts) {
                         if (c.getProductVariant().getId().equals(cart.getProductVariant().getId())) {
                             c.setQuantity(c.getQuantity() + cart.getQuantity());
-                            if (c.getQuantity() < 0)
+                            if (c.getQuantity() < 1)
                                 carts.remove(c);
                             break;
                         }
@@ -118,7 +112,7 @@ public class CartRestController extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-            List<Cart> carts = new ArrayList<>();
+        List<Cart> carts = new ArrayList<>();
             String cartCookie = cookieService.getCookie(req, "cart");
             if (cartCookie != null) {
                 String decoded = new String(Base64.getDecoder().decode(cartCookie));

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <title>Admin - Order Details</title>
 <body>
 <div class="main-panel">
@@ -21,18 +22,20 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="py-1">
-                                    <img src="${pageContext.request.contextPath}/assets/admin/images/avt.jpg" alt="image" />
-                                </td>
-                                <td> Cute girl </td>
-                                <td>#061222004</td>
-                                <td> $ 77.99 </td>
-                                <td> May 15, 2015 </td>
-                                <td> 0397767819 </td>
-                                <td> My Dinh - Nam Tu Liem - Ha Noi </td>
-                                <td><label class="badge badge-success">Completed</label></td>
-                            </tr>
+                           <c:forEach items="${orderDetails}" var="x">
+                               <tr>
+                                   <td class="py-1">
+                                       <img src="${pageContext.request.contextPath}/assets/admin/images/avt.jpg" alt="image" />
+                                   </td>
+                                   <td>${x.customerName}</td>
+                                   <td>${x.id}</td>
+                                   <td>${x.total}</td>
+                                   <td>${x.createdDate}</td>
+                                   <td>${x.phoneNumber}</td>
+                                   <td>${x.address} - ${x.district} - ${x.cityOrProvince}</td>
+                                   <td><label class="badge badge-success">Completed</label></td>
+                               </tr>
+                           </c:forEach>
                             </tbody>
                         </table>
                     </div>
