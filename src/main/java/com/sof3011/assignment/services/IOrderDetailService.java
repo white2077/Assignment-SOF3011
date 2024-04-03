@@ -6,5 +6,5 @@ import com.sof3011.assignment.entities.OrderDetail;
 import java.util.List;
 
 public interface IOrderDetailService extends IServiceInterface<OrderDetail,Long> {
-    void createOrder(List<Cart> cartItems, OrderDetail orderDetail);
+    OrderDetail createOrder(List<Cart> cartItems, OrderDetail orderDetail);
 }

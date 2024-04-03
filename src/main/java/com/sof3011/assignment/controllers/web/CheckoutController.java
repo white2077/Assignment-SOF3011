@@ -25,7 +25,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(value = {"/checkout-page", "/checkout","/checkout-cart"})
+@WebServlet(value = {"/checkout-page", "/checkout", "/checkout-cart", "/order-success"})
 public class CheckoutController extends HttpServlet {
     private final IOrderDetailService orderDetailService = ContextUtil.getBean(IOrderDetailService.class);
     private final IProductVariantService productVariantService = ContextUtil.getBean(IProductVariantService.class);
@@ -33,59 +33,70 @@ public class CheckoutController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        if (session.getAttribute("cart") == null) resp.sendRedirect("/");
-        else req.getRequestDispatcher("/WEB-CONTENT/pages/web/checkout.jsp").forward(req,resp);
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uri = req.getRequestURI();
         HttpSession session = req.getSession();
-        List<Cart> carts = new ArrayList<>();
-        if (uri.contains("/checkout-cart")) {
-            String cartCookie = cookieService.getCookie(req, "cart");
-            if (cartCookie != null) {
-                String decoded = new String(Base64.getDecoder().decode(cartCookie));
-                carts = new Gson().fromJson(decoded, new TypeToken<List<Cart>>() {
-                }.getType());
-            }
-            session.setAttribute("cart", carts);
-            resp.sendRedirect("/checkout-page");
-        }
-        else if(uri.contains("/checkout-page")){
-            Cart cartItem = Cart
-                    .builder()
-                    .productVariant(productVariantService.getById(Long.valueOf(req.getParameter("productVariantId"))))
-                    .quantity(Integer.parseInt(req.getParameter("quantity")))
-                    .build();
-            carts.add(cartItem);
-            session.setAttribute("cart", carts);
-            resp.sendRedirect("/checkout-page");
-        }
-        else
-            if(uri.equals("/checkout")){
-            List<Cart> cartItems = (List<Cart>) session.getAttribute("cart");
-            OrderDetail orderDetail = OrderDetail
-                    .builder().customerName(req.getParameter("customerName"))
-                    .address(req.getParameter("address"))
-                    .district(req.getParameter("district"))
-                    .cityOrProvince(req.getParameter("cityOrProvince"))
-                    .phoneNumber(req.getParameter("phoneNumber"))
-                    .build();
-            orderDetail.setCustomer((Customer) session.getAttribute("user"));
-            Map<String,String> violations = ValidatorUtils.validate(orderDetail);
-            if (!violations.isEmpty()){
-                req.setAttribute("violations",violations);
-                req.setAttribute("orderDetail",orderDetail);
-                req.getRequestDispatcher("/WEB-CONTENT/pages/web/checkout.jsp").forward(req,resp);
-            }
-            else {
-                orderDetailService.createOrder(cartItems, orderDetail);
+        if (uri.contains("/order-success")) {
+            OrderDetail orderDetail = (OrderDetail) session.getAttribute("orderDetails");
+            if (orderDetail != null) {
+                req.setAttribute("order", orderDetail);
                 session.removeAttribute("cart");
+                session.removeAttribute("orderDetails");
+                req.getRequestDispatcher("WEB-CONTENT/pages/web/order-complete.jsp").forward(req, resp);
+            } else {
+                resp.sendRedirect("/");
+            }
+
+        }else{
+            if (session.getAttribute("cart") != null) {
+                req.getRequestDispatcher("/WEB-CONTENT/pages/web/checkout.jsp").forward(req, resp);
+            } else {
                 resp.sendRedirect("/");
             }
         }
+}
+
+@Override
+protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String uri = req.getRequestURI();
+    HttpSession session = req.getSession();
+    List<Cart> carts = new ArrayList<>();
+    if (uri.contains("/checkout-cart")) {
+        String cartCookie = cookieService.getCookie(req, "cart");
+        if (cartCookie != null) {
+            String decoded = new String(Base64.getDecoder().decode(cartCookie));
+            carts = new Gson().fromJson(decoded, new TypeToken<List<Cart>>() {
+            }.getType());
+        }
+        session.setAttribute("cart", carts);
+        resp.sendRedirect("/checkout-page");
+    } else if (uri.contains("/checkout-page")) {
+        Cart cartItem = Cart
+                .builder()
+                .productVariant(productVariantService.getById(Long.valueOf(req.getParameter("productVariantId"))))
+                .quantity(Integer.parseInt(req.getParameter("quantity")))
+                .build();
+        carts.add(cartItem);
+        session.setAttribute("cart", carts);
+        resp.sendRedirect("/checkout-page");
+    } else if (uri.equals("/checkout")) {
+        List<Cart> cartItems = (List<Cart>) session.getAttribute("cart");
+        OrderDetail orderDetail = OrderDetail
+                .builder().customerName(req.getParameter("customerName"))
+                .address(req.getParameter("address"))
+                .district(req.getParameter("district"))
+                .cityOrProvince(req.getParameter("cityOrProvince"))
+                .phoneNumber(req.getParameter("phoneNumber"))
+                .build();
+        orderDetail.setCustomer((Customer) session.getAttribute("user"));
+        Map<String, String> violations = ValidatorUtils.validate(orderDetail);
+        if (!violations.isEmpty()) {
+            req.setAttribute("violations", violations);
+            req.setAttribute("orderDetail", orderDetail);
+            req.getRequestDispatcher("/WEB-CONTENT/pages/web/checkout.jsp").forward(req, resp);
+        } else {
+            session.setAttribute("orderDetails", orderDetailService.createOrder(cartItems, orderDetail));
+            resp.sendRedirect("/order-success");
+        }
     }
+}
 }

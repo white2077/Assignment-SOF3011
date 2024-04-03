@@ -14,5 +14,5 @@ public enum OrderStatus {
     ,
     FAILED
     ,
-    COMPLETED
+    SUCCESS
 }

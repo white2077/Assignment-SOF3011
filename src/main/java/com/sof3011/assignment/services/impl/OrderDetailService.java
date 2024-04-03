@@ -19,7 +19,7 @@ public class OrderDetailService implements IOrderDetailService {
     private final IOrderDetailRepository orderDetailRepository;
     private final IOrderItemRepository orderItemRepository;
     @Override
-    public void createOrder(List<Cart> cartItems, OrderDetail orderDetail) {
+    public OrderDetail createOrder(List<Cart> cartItems, OrderDetail orderDetail) {
         List<OrderItem> orderItems =cartItems.stream().map(cart -> OrderItem
                 .builder()
                 .note("")
@@ -32,6 +32,7 @@ public class OrderDetailService implements IOrderDetailService {
         OrderDetail order = orderDetailRepository.save(orderDetail);
         orderItems.forEach(orderItem -> orderItem.setOrderDetail(order));
         orderItemRepository.saveAll(orderItems);
+        return orderDetailRepository.findById(order.getId()).orElse(null);
     }
     @Override
     public List<OrderDetail> getAll() {

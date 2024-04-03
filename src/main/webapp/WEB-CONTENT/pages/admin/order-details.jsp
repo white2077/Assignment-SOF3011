@@ -33,7 +33,28 @@
                                    <td>${x.createdDate}</td>
                                    <td>${x.phoneNumber}</td>
                                    <td>${x.address} - ${x.district} - ${x.cityOrProvince}</td>
-                                   <td><label class="badge badge-success">Completed</label></td>
+                                   <c:choose>
+                                       <c:when test="${x.status eq 'PENDING'}">
+                                           <td>
+                                               <button type="button" class="btn btn-warning">Pending</button>
+                                           </td>
+                                       </c:when>
+                                       <c:when test="${x.status eq 'SUCCESS'}">
+                                           <td>
+                                               <button type="button" class="btn btn-success">Success</button>
+                                           </td>
+                                       </c:when>
+                                       <c:when test="${x.status eq 'CANCEL'}">
+                                           <td>
+                                               <button type="button" class="btn btn-danger">Cancel</button>
+                                           </td>
+                                       </c:when>
+                                       <c:when test="${x.status eq 'SHIPPING'}">
+                                             <td>
+                                                  <button type="button" class="btn btn-info">Shipping</button>
+                                             </td>
+                                       </c:when>
+                                   </c:choose>
                                </tr>
                            </c:forEach>
                             </tbody>
