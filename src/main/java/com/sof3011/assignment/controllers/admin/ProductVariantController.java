@@ -26,7 +26,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @WebServlet(value = {"/admin/product/add-product-variant-page",
-        "/admin/product/add-product-variant"})
+        "/admin/product/add-product-variant",
+        "/admin/product-variant/delete",
+        "/admin/product-variant/update-page"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 
 
@@ -38,11 +40,29 @@ public class ProductVariantController extends HttpServlet {
     private Product product;
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String slug = req.getParameter("product");
-        product = productService.getBySlug(slug);
-        req.setAttribute("product", product);
-        req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
-        req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form.jsp").forward(req,resp);
+        String uri = req.getRequestURI();
+        if (uri.contains("/add-product-variant-page")){
+            String slug = req.getParameter("product");
+            product = productService.getBySlug(slug);
+            req.setAttribute("product", product);
+            req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form.jsp").forward(req,resp);
+        }
+        else if (uri.contains("/delete")){
+            Long id = Long.valueOf(req.getParameter("id"));
+            productVariantService.delete(id);
+            resp.sendRedirect("/admin/product/add-product-variant-page?product="+product.getSlug());
+        }
+        else if (uri.contains("/update-page")){
+            req.setAttribute("product", product);
+            Long id = Long.valueOf(req.getParameter("id"));
+            req.setAttribute("productVariant",productVariantService.getById(id));
+            req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form.jsp").forward(req,resp);
+        }
+        else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+        }
     }
 
     @Override
