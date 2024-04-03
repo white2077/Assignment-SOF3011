@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-@WebServlet(value = {"/admin/order-details"})
+@WebServlet(value = {"/admin/order-details","/admin/order-details/view-items"})
 public class OderDetailController extends HttpServlet {
     private final IOrderDetailService orderDetailService = ContextUtil.getBean(IOrderDetailService.class);
     @Override
@@ -18,6 +18,12 @@ public class OderDetailController extends HttpServlet {
         if (url.equals("/admin/order-details")){
             req.setAttribute("orderDetails",orderDetailService.getAll());
             req.getRequestDispatcher("/WEB-CONTENT/pages/admin/order-details.jsp").forward(req,resp);
+        }
+        if (url.equals("/admin/order-details/view-items")){
+            Long id = Long.parseLong(req.getParameter("id"));
+            req.setAttribute("orderItems",orderDetailService.getById(id));
+            req.setAttribute("orderDetail",orderDetailService.getById(id));
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/order-items.jsp").forward(req,resp);
         }
     }
 }

@@ -30,7 +30,7 @@
                     <div class="col-lg-6">
                         <label class="form-label text-sm text-uppercase" for="fullName">Full name</label>
                         <input class="form-control form-control-lg" type="text" id="fullName"
-                               name="customerName"
+                               name="customerName"  value="${customerName}"
                                placeholder="Enter your first name">
                         <span style="color: red">${violations.get("customerName")}</span>
                     </div>
@@ -38,7 +38,7 @@
                         <label class="form-label text-sm text-uppercase" for="phone">Phone number</label>
                         <input class="form-control form-control-lg"
                                type="tel" id="phone" name="phoneNumber"
-                               placeholder="e.g. +02 245354745">
+                               placeholder="e.g. +02 245354745" value="${phoneNumber}">
                         <span style="color: red">${violations.get("phoneNumber")}</span>
                     </div>
                     <div class="col-lg-12">
@@ -46,6 +46,7 @@
                         <input class="form-control form-control-lg" type="text"
                                id="address"
                                placeholder="House number and street name"
+                               value="${address}"
                         name="address">
                         <span style="color: red">${violations.get("address")}</span>
 
@@ -53,14 +54,17 @@
                     <div class="col-lg-6">
                         <label class="form-label text-sm text-uppercase" for="district">District</label>
                         <input class="form-control form-control-lg" type="text" id="district"
-                        name="district">
+                        name="district"
+                        value="${district}">
                         <span style="color: red">${violations.get("district")}</span>
 
                     </div>
                     <div class="col-lg-6">
                         <label class="form-label text-sm text-uppercase" for="cityOrProvince">City/Province</label>
                         <input class="form-control form-control-lg" type="text" id="cityOrProvince"
-                        name="cityOrProvince">
+                        name="cityOrProvince"
+                        value="${cityOrProvince}"
+                        >
                         <span style="color: red">${violations.get("cityOrProvince")}</span>
 
                     </div>

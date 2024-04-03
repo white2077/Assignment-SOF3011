@@ -1,5 +1,5 @@
-import com.sof3011.assignment.repositories.IProductAttributeRepository;
-import com.sof3011.assignment.repositories.IProductRepository;
+import com.sof3011.assignment.entities.Cart;
+import com.sof3011.assignment.repositories.*;
 import com.sof3011.assignment.utils.ContextUtil;
 import com.sof3011.assignment.utils.SlugUtil;
 
@@ -38,4 +38,13 @@ public class TestApplication {
             System.out.println(key + " " + value);
         });
     }
+
+    @Test
+    void testCart() {
+        IOrderDetailRepository iOrderDetailRepository = ContextUtil.getBean(IOrderDetailRepository.class);
+        iOrderDetailRepository.findById(25L).get().getOrderItems().forEach(orderItem -> {
+            System.out.println(orderItem.getProductVariant().getProduct().getProductName());
+        });
+    }
+
 }

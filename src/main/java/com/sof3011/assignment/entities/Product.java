@@ -1,5 +1,6 @@
 package com.sof3011.assignment.entities;
 
+import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

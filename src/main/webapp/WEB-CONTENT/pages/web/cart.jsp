@@ -57,7 +57,14 @@
                             <td class="p-3 align-middle border-light">
                                 <p class="mb-0 small">{{total}}</p>
                             </td>
-                            <td class="p-3 align-middle border-light"><a class="reset-anchor"><i ng-click="removeCartProduct(cartItem.productVariant.id)" class="fas fa-trash-alt small text-muted"></i></a></td>
+                            <c:choose>
+                                <c:when test="${not empty sessionScope.user}">
+                                    <td class="p-3 align-middle border-light"><a class="reset-anchor"><i ng-click="removeCartProduct(cartItem.id)" class="fas fa-trash-alt small text-muted"></i></a></td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td class="p-3 align-middle border-light"><a class="reset-anchor"><i ng-click="removeCartProduct(cartItem.productVariant.id)" class="fas fa-trash-alt small text-muted"></i></a></td>
+                                </c:otherwise>
+                            </c:choose>
                         </tr>
                     </tbody>
                 </table>
@@ -108,6 +115,7 @@
         function getCart() {
             $http.get('${pageContext.request.contextPath}/get-cart').then(function (response) {
                 $scope.cart = response.data;
+                console.log(response.data)
             }).then(total).catch(function (error) {
                 total();
             });
@@ -130,6 +138,7 @@
             cartItemPost.quantity = 1;
             $http.post('${pageContext.request.contextPath}/add-to-cart', cartItemPost).then(function (response) {
                 $scope.cart = response.data;
+                getCart();
             }).catch(function (error) {
                 getCart();
             });

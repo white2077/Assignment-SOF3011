@@ -10,11 +10,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
@@ -42,10 +38,8 @@ public class ProductVariant extends CoreEntity {
     @Column(name = "status", nullable = false)
     private boolean status;
 
-    @Expose
     @ManyToMany
     private Set<ProductAttribute> productVariantAttributes;
-    @Expose
     @ManyToOne
     private Product product;
 }

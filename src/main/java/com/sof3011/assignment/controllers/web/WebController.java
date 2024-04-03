@@ -1,5 +1,6 @@
 package com.sof3011.assignment.controllers.web;
 
+import com.sof3011.assignment.security.CustomPrincipal;
 import com.sof3011.assignment.services.IProductService;
 import com.sof3011.assignment.utils.ContextUtil;
 import jakarta.servlet.ServletException;
@@ -7,6 +8,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import org.hibernate.Session;
 
 import java.io.IOException;
 @WebServlet(value = "/")

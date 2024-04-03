@@ -15,7 +15,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderDetail extends CoreEntity {
     @ManyToOne
-    private Customer customer;
+    private User customer;
 
     @NotNull
     @Size(min = 5 , message = "Address must be at least 5 characters")

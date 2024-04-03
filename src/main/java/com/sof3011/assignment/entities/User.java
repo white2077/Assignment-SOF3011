@@ -1,23 +1,21 @@
 package com.sof3011.assignment.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import com.sof3011.assignment.enums.Role;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import java.util.List;
 
 @Entity(name = "customers")
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
-public class Customer extends CoreEntity {
+public class User extends CoreEntity {
     @NotNull
     @Size(min = 5)
     @Column(name = "username")
@@ -39,6 +37,9 @@ public class Customer extends CoreEntity {
     private String email;
     @Column(name = "status", nullable = false)
     private boolean status;
+    @NotBlank(message = "Role is required")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToMany(mappedBy = "customer")
     private List<OrderDetail> orderDetails;

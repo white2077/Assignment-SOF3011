@@ -19,6 +19,7 @@
                                 <th> Phone Number</th>
                                 <th> Address </th>
                                 <th> Status </th>
+                                <th>View Items</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -55,6 +56,9 @@
                                              </td>
                                        </c:when>
                                    </c:choose>
+                                      <td>
+                                          <a href="/admin/order-details/view-items?id=${x.id}" class="btn btn-success">View</a>
+                                      </td>
                                </tr>
                            </c:forEach>
                             </tbody>
