@@ -55,6 +55,11 @@
                                                   <button type="button" class="btn btn-info">Shipping</button>
                                              </td>
                                        </c:when>
+                                       <c:when test="${x.status eq 'FAILED'}">
+                                             <td>
+                                                  <button type="button" class="btn btn-danger">Failed</button>
+                                             </td>
+                                        </c:when>
                                    </c:choose>
                                       <td>
                                           <a href="${pageContext.request.contextPath}/admin/order-details/view-items?id=${x.id}" class="btn btn-success">View</a>

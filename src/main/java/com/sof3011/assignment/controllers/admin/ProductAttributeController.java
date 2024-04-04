@@ -18,7 +18,9 @@ import java.util.Map;
 
 @WebServlet(value = {"/admin/attribute/add-parent-attribute"
         , "/admin/attribute/add-child-product-attribute"
-        , "/admin/attribute/add-category","/admin/attribute/all-attributes-page"})
+        , "/admin/attribute/add-category",
+        "/admin/attribute/all-attributes-page",
+        "/admin/attribute/delete-attribute"})
 public class ProductAttributeController extends HttpServlet {
     private final IProductAttributeService productAttributeService = ContextUtil.getBean(ProductAttributeService.class);
 
@@ -28,6 +30,9 @@ public class ProductAttributeController extends HttpServlet {
         if (uri.equals("/admin/attribute/all-attributes-page")){
             req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
             req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-attribute.jsp").forward(req,resp);
+        } else if (uri.contains("/admin/attribute/delete-attribute")) {
+            productAttributeService.delete(Long.parseLong(req.getParameter("id")));
+            resp.sendRedirect("/admin/products/add-product");
         }
     }
 

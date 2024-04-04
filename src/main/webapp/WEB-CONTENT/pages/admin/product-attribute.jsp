@@ -70,11 +70,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Jacob</td>
-                                    <td>53275531</td>
-                                    <td>12 May 2017</td>
-                                </tr>
+                                <c:forEach items="${productAttribute}" var="x">
+                                    <tr>
+                                        <td>${x.attributeName}</td>
+                                        <td>${x.createdDate}</td>
+                                        <td>${x.modifiedDate}</td>
+                                    </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>

@@ -76,26 +76,29 @@
             <div class="col-lg-6 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Hoverable Table</h4>
+                        <h4 class="card-title">Category Table</h4>
                         <p class="card-description"> Add class
                         </p>
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Product</th>
-                                    <th>Sale</th>
+                                    <th>Category ID</th>
+                                    <th>CategoryName</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>Jacob</td>
-                                    <td>Photoshop</td>
-                                    <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
-                                    <td><label class="badge badge-danger">Pending</label></td>
-                                </tr>
+                                <c:forEach items="${categories.childAttributes}" var="x">
+                                    <tr>
+                                        <td>${x.id}</td>
+                                        <td>${x.attributeName}</td>
+                                        <td>
+                                            <a href="${pageContext.request.contextPath}/admin/attribute/delete-attribute?id=${x.id}"
+                                               class="btn btn-danger">Delete</a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                         </div>
