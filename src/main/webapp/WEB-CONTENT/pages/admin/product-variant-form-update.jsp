@@ -20,7 +20,7 @@
                         <h4 class="card-title">Add product</h4>
                         <p class="card-description"> Add new product variant for ${productVariant.variantName}</p>
                         <form class="forms-sample"
-                              action="${pageContext.request.contextPath}/admin/product-variant/update?id=${product.id}"
+                              action="${pageContext.request.contextPath}/admin/product-variant/update?id=${productVariant.id}"
                               method="post"
                               enctype="multipart/form-data" method="post" accept="image/png, image/gif, image/jpeg">
                             <div class="form-group">
