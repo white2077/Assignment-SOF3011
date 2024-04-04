@@ -34,6 +34,16 @@ public class OrderDetailService implements IOrderDetailService {
         orderItemRepository.saveAll(orderItems);
         return orderDetailRepository.findById(order.getId()).orElse(null);
     }
+
+    @Override
+    public void updateStatus(Long id, OrderStatus orderStatus) {
+        OrderDetail orderDetail = orderDetailRepository.findById(id).orElse(null);
+        if (orderDetail != null){
+            orderDetail.setStatus(orderStatus);
+            orderDetailRepository.save(orderDetail);
+        }
+    }
+
     @Override
     public List<OrderDetail> getAll() {
         return orderDetailRepository.findAll();

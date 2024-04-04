@@ -18,24 +18,24 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Add product</h4>
-                        <p class="card-description"> Add new product variant for ${product.productName}s</p>
+                        <p class="card-description"> Add new product variant for ${productVariant.variantName}</p>
                         <form class="forms-sample"
-                              action="${pageContext.request.contextPath}/admin/product/add-product-variant"
+                              action="${pageContext.request.contextPath}/admin/product-variant/update?id=${product.id}"
                               method="post"
                               enctype="multipart/form-data" method="post" accept="image/png, image/gif, image/jpeg">
                             <div class="form-group">
                                 <label for="variantName">Variant Name</label>
-                                <input type="text" class="form-control" id="variantName" name="variantName" value="${product.productName}" placeholder="Product Name">
+                                <input type="text" class="form-control" id="variantName" name="variantName" value="${productVariant.variantName}" placeholder="Product Name">
                                 <code>${violations.get("variantName")}</code>
                             </div>
                             <div class="form-group">
                                 <label for="price">Price</label>
-                                <input type="text" class="form-control" id="price" name="price" placeholder="Product Name">
+                                <input type="text" class="form-control" id="price" name="price" value="${productVariant.price}" placeholder="Product Name">
                                 <code>${violations.get("price")}</code>
                             </div>
                             <div class="form-group">
                                 <label for="quantity">Quantity</label>
-                                <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Product Name">
+                                <input type="text" class="form-control" id="quantity" name="quantity" value="${productVariant.quantity}" placeholder="Product Name">
                                 <code>${violations.get("quantity")}</code>
                             </div>
                             <c:forEach items="${productAttribute}" var="x">
@@ -103,8 +103,8 @@
                                             </c:otherwise>
                                         </c:choose>
                                         <td>
-                                            <a class="btn btn-primary">Edit</a>
-                                            <a class="btn btn-danger">Delete</a>
+                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/product-variant/update-page?id=${productVariant.id}">Edit</a>
+                                            <a class="btn btn-danger" href="${pageContext.request.contextPath}/admin/product-variant/delete?id=${productVariant.id}">Delete</a>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -4,33 +4,43 @@
 <body>
 <div class="main-panel">
     <div class="content-wrapper">
+        <form method="post" action="${pageContext.request.contextPath}/admin/order-details/update-status?id=${orderDetail.id}">
         <div class="col-md-12 grid-margin stretch-card">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Orders #${orderDetail.id}</h4>
-                    <p class="card-description"> Order Information</p>
-                    <form class="forms-sample">
-                        <div class="form-group">
-                            <label >Customer name: ${orderDetail.customerName}</label>
-                        </div>
-                        <div class="form-group">
-                            <label >Phone number:   ${orderDetail.phoneNumber} </label>
-                        </div>
-                        <div class="form-group">
-                            <label >City Or Province: ${orderDetail.cityOrProvince}  </label>
-                        </div>
-                        <div class="form-group">
-                            <label >District: ${orderDetail.district}</label>
-                        </div>
-                        <div class="form-group">
-                            <label >Address: ${orderDetail.address}</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                        <button class="btn btn-dark">Cancel</button>
-                    </form>
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Orders #${orderDetail.id}</h4>
+                        <p class="card-description"> Order Information</p>
+                        <form class="forms-sample">
+                            <div class="form-group">
+                                <label >Customer name: ${orderDetail.customerName}</label>
+                            </div>
+                            <div class="form-group">
+                                <label >Phone number:   ${orderDetail.phoneNumber} </label>
+                            </div>
+                            <div class="form-group">
+                                <label >City Or Province: ${orderDetail.cityOrProvince}  </label>
+                            </div>
+                            <div class="form-group">
+                                <label >District: ${orderDetail.district}</label>
+                            </div>
+                            <div class="form-group">
+                                <label >Address: ${orderDetail.address}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect2">Order Status</label>
+                                <select class="form-control" id="exampleFormControlSelect2" name="orderStatus">
+                                    <c:forEach items="${orderStatus}" var="x">
+                                        <option value="${x.name()}">${x.name()}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                            <button class="btn btn-dark">Cancel</button>
+                        </form>
+                    </div>
                 </div>
-            </div>
         </div>
+        </form>
         <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">

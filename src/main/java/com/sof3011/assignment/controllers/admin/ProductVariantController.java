@@ -28,7 +28,8 @@ import java.util.stream.Collectors;
 @WebServlet(value = {"/admin/product/add-product-variant-page",
         "/admin/product/add-product-variant",
         "/admin/product-variant/delete",
-        "/admin/product-variant/update-page"})
+        "/admin/product-variant/update-page"
+        ,"/admin/product-variant/update"})
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 5 * 5)
 
 
@@ -58,7 +59,7 @@ public class ProductVariantController extends HttpServlet {
             Long id = Long.valueOf(req.getParameter("id"));
             req.setAttribute("productVariant",productVariantService.getById(id));
             req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
-            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form.jsp").forward(req,resp);
+            req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form-update.jsp").forward(req,resp);
         }
         else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -90,6 +91,34 @@ public class ProductVariantController extends HttpServlet {
                 filePart.write(fileName);
                 resp.sendRedirect("/admin/product/add-product-variant-page?product="+product.getSlug());
             }
+        } else if
+        (uri.contains("/admin/product-variant/update")){
+            Part filePart = req.getPart("image");
+            String fileName = fileService.getFileName(filePart,req);
+            Long id = Long.valueOf(req.getParameter("id"));
+            ProductVariant productVariant = productVariantService.getById(id);
+            productVariant.setVariantName(req.getParameter("variantName"));
+            productVariant.setPrice(Long.parseLong(req.getParameter("price")));
+            productVariant.setQuantity(Integer.parseInt(req.getParameter("quantity")));
+            productVariant.setProductVariantAttributes(productAttributeService.getAllBySetIds(getAttributeIds(req)));
+            System.out.println(productVariant.getImage());
+            Map<String,String> violations = ValidatorUtils.validate(productVariant);
+            if (!violations.isEmpty()){
+                req.setAttribute("violations",violations);
+                req.setAttribute("productAttribute",productAttributeService.getAllParentAttributeProductVariant());
+                req.getRequestDispatcher("/WEB-CONTENT/pages/admin/product-variant-form.jsp").forward(req,resp);
+            }
+            else {
+                if (filePart.getSize() != 0){
+                    productVariant.setImage(fileService.getName());
+                    filePart.write(fileName);
+                }
+                productVariantService.update(productVariant);
+                resp.sendRedirect("/admin/product/add-product-variant-page?product="+product.getSlug());
+            }
+        } else {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+
         }
     }
     private Set<Long> getAttributeIds(HttpServletRequest req){

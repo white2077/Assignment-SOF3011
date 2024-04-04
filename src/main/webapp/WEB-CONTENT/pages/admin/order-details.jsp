@@ -57,7 +57,7 @@
                                        </c:when>
                                    </c:choose>
                                       <td>
-                                          <a href="/admin/order-details/view-items?id=${x.id}" class="btn btn-success">View</a>
+                                          <a href="${pageContext.request.contextPath}/admin/order-details/view-items?id=${x.id}" class="btn btn-success">View</a>
                                       </td>
                                </tr>
                            </c:forEach>

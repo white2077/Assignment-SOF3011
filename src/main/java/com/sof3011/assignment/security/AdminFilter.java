@@ -13,7 +13,6 @@ public class AdminFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         AuthRequestWrapper request = (AuthRequestWrapper) servletRequest;
         HttpServletResponse response  = (HttpServletResponse) servletResponse;
-
         if (! request.isUserInRole("ADMIN")) {
             request.getRequestDispatcher("/page/error/access-denied.jsp").forward(request, response);
             return;
