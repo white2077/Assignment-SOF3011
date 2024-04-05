@@ -17,8 +17,9 @@ import lombok.*;
 public class Address extends CoreEntity {
     @ManyToOne
     private User customer;
+
     @Size(min = 5)
-    @NotBlank(message = "Address is required")
+    @NotNull(message = "Address is required")
     @Column(name = "address")
     private String address;
 
@@ -31,4 +32,6 @@ public class Address extends CoreEntity {
     @Size(min = 5, message = "District must be at least 5 characters")
     @Column(name = "district",columnDefinition = "nvarchar(100)")
     private String district;
+
+    private boolean defaultAddress;
 }

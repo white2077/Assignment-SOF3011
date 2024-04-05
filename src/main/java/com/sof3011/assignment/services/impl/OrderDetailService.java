@@ -3,13 +3,17 @@ package com.sof3011.assignment.services.impl;
 import com.sof3011.assignment.entities.Cart;
 import com.sof3011.assignment.entities.OrderDetail;
 import com.sof3011.assignment.entities.OrderItem;
+import com.sof3011.assignment.entities.User;
 import com.sof3011.assignment.enums.OrderStatus;
 import com.sof3011.assignment.repositories.IOrderDetailRepository;
 import com.sof3011.assignment.repositories.IOrderItemRepository;
 import com.sof3011.assignment.services.IOrderDetailService;
+import jakarta.persistence.NoResultException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,16 +41,16 @@ public class OrderDetailService implements IOrderDetailService {
 
     @Override
     public void updateStatus(Long id, OrderStatus orderStatus) {
-        OrderDetail orderDetail = orderDetailRepository.findById(id).orElse(null);
-        if (orderDetail != null){
-            orderDetail.setStatus(orderStatus);
-            orderDetailRepository.save(orderDetail);
-        }
+        OrderDetail orderDetail = orderDetailRepository.findById(id).orElseThrow(() -> new NoResultException("Order not found"));
+        orderDetail.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
+        orderDetail.setStatus(orderStatus);
+        orderDetailRepository.save(orderDetail);
+
     }
 
     @Override
-    public List<OrderDetail> getAll() {
-        return orderDetailRepository.findAll();
+    public List<OrderDetail> getbyCustomer(User user) {
+        return orderDetailRepository.findAllByCustomer(user);
     }
 
     @Override
@@ -55,17 +59,7 @@ public class OrderDetailService implements IOrderDetailService {
     }
 
     @Override
-    public OrderDetail insert(OrderDetail e) {
-        return orderDetailRepository.save(e);
-    }
-
-    @Override
-    public void update(OrderDetail e) {
-        orderDetailRepository.save(e);
-    }
-
-    @Override
-    public void delete(Long id) {
-        orderDetailRepository.deleteById(id);
+    public List<OrderDetail> getAll() {
+        return orderDetailRepository.findAll();
     }
 }

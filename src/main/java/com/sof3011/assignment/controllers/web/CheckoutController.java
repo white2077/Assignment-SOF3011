@@ -2,6 +2,7 @@ package com.sof3011.assignment.controllers.web;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sof3011.assignment.entities.Address;
 import com.sof3011.assignment.entities.Cart;
 import com.sof3011.assignment.entities.User;
 import com.sof3011.assignment.entities.OrderDetail;
@@ -11,6 +12,7 @@ import com.sof3011.assignment.services.ICookieService;
 import com.sof3011.assignment.services.IOrderDetailService;
 import com.sof3011.assignment.services.IProductVariantService;
 import com.sof3011.assignment.services.IUserService;
+import com.sof3011.assignment.services.impl.AddressService;
 import com.sof3011.assignment.services.impl.CartService;
 import com.sof3011.assignment.services.impl.CookieService;
 import com.sof3011.assignment.services.impl.UserService;
@@ -57,11 +59,14 @@ public class CheckoutController extends HttpServlet {
                 if (session.getAttribute("user") != null) {
                     CustomPrincipal customPrincipal = (CustomPrincipal)session.getAttribute("user") ;
                     User user = userService.getUserByUsername(customPrincipal.getName());
-                    req.setAttribute("customerName", user.getCustomerName());
-                    req.setAttribute("phoneNumber", user.getPhoneNumber());
-                    req.setAttribute("address", user.getAddresses().get(0).getAddress());
-                    req.setAttribute("cityOrProvince", user.getAddresses().get(0).getCityOrProvince());
-                    req.setAttribute("district", user.getAddresses().get(0).getDistrict());
+                    Address address = new Address();
+                    address.setCustomer(new User());
+                    address = user.getAddresses().stream().filter(Address::isDefaultAddress).findFirst().orElse(address);
+                    req.setAttribute("customerName", address.getCustomer().getCustomerName());
+                    req.setAttribute("phoneNumber", address.getCustomer().getPhoneNumber());
+                    req.setAttribute("address", address.getAddress());
+                    req.setAttribute("cityOrProvince", address.getCityOrProvince());
+                    req.setAttribute("district", address.getDistrict());
                 }
                 req.getRequestDispatcher("/WEB-CONTENT/pages/web/checkout.jsp").forward(req, resp);
             } else {

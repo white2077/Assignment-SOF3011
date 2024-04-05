@@ -1,5 +1,9 @@
 import com.sof3011.assignment.entities.Cart;
 import com.sof3011.assignment.repositories.*;
+import com.sof3011.assignment.services.IOrderDetailService;
+import com.sof3011.assignment.services.IUserService;
+import com.sof3011.assignment.services.impl.OrderDetailService;
+import com.sof3011.assignment.services.impl.UserService;
 import com.sof3011.assignment.utils.ContextUtil;
 import com.sof3011.assignment.utils.SlugUtil;
 
@@ -47,4 +51,15 @@ public class TestApplication {
         });
     }
 
+    @Test
+    void testOrder() {
+        IOrderDetailService iOrderDetailService = ContextUtil.getBean(OrderDetailService.class);
+        IUserService iUserService = ContextUtil.getBean(UserService.class);
+        iOrderDetailService.getbyCustomer(iUserService.getUserByUsername("yu")).forEach(orderDetail -> {
+            System.out.println(orderDetail.getCustomerName());
+        });
+        iUserService.getUserByUsername("yu").getAddresses().forEach(address -> {
+            System.out.println(address.getAddress());
+        });
+    }
 }

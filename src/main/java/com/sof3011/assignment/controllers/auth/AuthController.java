@@ -22,7 +22,7 @@ public class AuthController extends HttpServlet {
         if (req.getRequestURI().equals("/login")) {
             req.getRequestDispatcher("/WEB-CONTENT/pages/auth/login.jsp").forward(req, resp);
         } else if (req.getRequestURI().equals("/logout")) {
-            req.getSession().invalidate();
+            req.getSession().removeAttribute("user");
             resp.sendRedirect("/login");
         }
     }
@@ -56,7 +56,7 @@ public class AuthController extends HttpServlet {
         if (customPrincipal.isRole("ADMIN")) {
             resp.sendRedirect("/admin/dash-board");
         } else {
-            resp.sendRedirect("/home");
+            resp.sendRedirect("/");
         }
     }
 }

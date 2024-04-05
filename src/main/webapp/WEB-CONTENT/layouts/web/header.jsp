@@ -13,14 +13,26 @@
                     <li class="nav-item">
                         <!-- Link--><a class="nav-link" href="detail.html">Product detail</a>
                     </li>
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
-                        <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown"><a class="dropdown-item border-0 transition-link" href="index.html">Homepage</a><a class="dropdown-item border-0 transition-link" href="shop.html">Category</a><a class="dropdown-item border-0 transition-link" href="detail.html">Product detail</a><a class="dropdown-item border-0 transition-link" href="${pageContext.request.contextPath}/cart">Shopping cart</a><a class="dropdown-item border-0 transition-link" href="checkout.html">Checkout</a></div>
-                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/cart"> <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small class="text-gray fw-normal">(2)</small></a></li>
                     <li class="nav-item"><a class="nav-link" href="#!"> <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"> (0)</small></a></li>
-                    <li class="nav-item"><a class="nav-link" href="/login"> <i class="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
+                    <c:choose>
+                        <c:when test="${sessionScope.user == null}">
+                            <li class="nav-item"><a class="nav-link" href="/login"> <i class="fas fa-user me-1 text-gray fw-normal"></i>Login</a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="pagesDropdown" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${sessionScope.user.name}</a>
+                                <div class="dropdown-menu mt-3 shadow-sm" aria-labelledby="pagesDropdown">
+                                    <a class="dropdown-item border-0 transition-link" href="${pageContext.request.contextPath}/address">Your Address</a>
+                                    <a class="dropdown-item border-0 transition-link" href="${pageContext.request.contextPath}/order-detail">Orders detail</a>
+                                    <a class="dropdown-item border-0 transition-link" href="${pageContext.request.contextPath}/cart">Shopping cart</a>
+                                    <a class="dropdown-item border-0 transition-link" href="${pageContext.request.contextPath}/logout">Logout</a>
+                                </div>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
                 </ul>
             </div>
         </nav>
