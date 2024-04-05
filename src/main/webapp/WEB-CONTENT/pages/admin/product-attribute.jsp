@@ -67,6 +67,7 @@
                                     <th>Attribute Name</th>
                                     <th>Created Date</th>
                                     <th>Modifier Date</th>
+                                    <th>Edit</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -75,6 +76,7 @@
                                         <td>${x.attributeName}</td>
                                         <td>${x.createdDate}</td>
                                         <td>${x.modifiedDate}</td>
+                                        <td></td>
                                     </tr>
                                     </c:forEach>
                                 </tbody>

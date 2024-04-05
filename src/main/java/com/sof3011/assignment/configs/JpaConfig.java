@@ -31,8 +31,7 @@ public class JpaConfig  {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        LocalContainerEntityManagerFactoryBean em
-                = new LocalContainerEntityManagerFactoryBean();
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.sof3011.assignment.entities");
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();

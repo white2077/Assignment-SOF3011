@@ -6,10 +6,12 @@ import com.sof3011.assignment.entities.Cart;
 import com.sof3011.assignment.entities.User;
 import com.sof3011.assignment.entities.OrderDetail;
 import com.sof3011.assignment.security.CustomPrincipal;
+import com.sof3011.assignment.services.ICartService;
 import com.sof3011.assignment.services.ICookieService;
 import com.sof3011.assignment.services.IOrderDetailService;
 import com.sof3011.assignment.services.IProductVariantService;
 import com.sof3011.assignment.services.IUserService;
+import com.sof3011.assignment.services.impl.CartService;
 import com.sof3011.assignment.services.impl.CookieService;
 import com.sof3011.assignment.services.impl.UserService;
 import com.sof3011.assignment.utils.ContextUtil;
@@ -33,6 +35,7 @@ public class CheckoutController extends HttpServlet {
     private final IProductVariantService productVariantService = ContextUtil.getBean(IProductVariantService.class);
     private final ICookieService cookieService = new CookieService();
     private final IUserService userService = ContextUtil.getBean(UserService.class);
+    private final ICartService cartService = ContextUtil.getBean(CartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,9 +54,9 @@ public class CheckoutController extends HttpServlet {
 
         }else{
             if (session.getAttribute("cart") != null) {
-                CustomPrincipal customPrincipal = (CustomPrincipal) session.getAttribute("user");
-                User user = userService.getUserByUsername(customPrincipal.getName());
-                if (customPrincipal != null) {
+                if (session.getAttribute("user") != null) {
+                    CustomPrincipal customPrincipal = (CustomPrincipal)session.getAttribute("user") ;
+                    User user = userService.getUserByUsername(customPrincipal.getName());
                     req.setAttribute("customerName", user.getCustomerName());
                     req.setAttribute("phoneNumber", user.getPhoneNumber());
                     req.setAttribute("address", user.getAddresses().get(0).getAddress());
@@ -74,11 +77,15 @@ protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws S
     List<Cart> carts = new ArrayList<>();
     if (uri.contains("/checkout-cart")) {
         String cartCookie = cookieService.getCookie(req, "cart");
-        if (cartCookie != null) {
+        if (session.getAttribute("user") == null) {
             String decoded = new String(Base64.getDecoder().decode(cartCookie));
             carts = new Gson().fromJson(decoded, new TypeToken<List<Cart>>() {
             }.getType());
         }
+        else {
+            carts = cartService.getCartByUser(userService.getUserByUsername(((CustomPrincipal) session.getAttribute("user")).getName()));
+        }
+
         session.setAttribute("cart", carts);
         resp.sendRedirect("/checkout-page");
     } else if (uri.contains("/checkout-page")) {

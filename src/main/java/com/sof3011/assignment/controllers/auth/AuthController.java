@@ -34,7 +34,7 @@ public class AuthController extends HttpServlet {
         CustomPrincipal customPrincipal;
         HttpSession session = req.getSession(false);
         if (session != null) {
-            session.removeAttribute("user");
+                    session.removeAttribute("user");
         }
         if (username != "" && password != "") {
             User userAuthentication = userService.authenticate(username, password);
